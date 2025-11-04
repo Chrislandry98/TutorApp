@@ -1,0 +1,27 @@
+/* Style pour les boutons (tabs) Étudiant/Tuteur */
+.btn-dark {
+    /* Style du bouton actif */
+    background-color: rgb(79, 79, 247) !important;
+    color: white !important;
+    border-radius: 0.25rem;
+    border: none;
+}
+
+.btn{
+    background-color: rgb(79, 79, 247) !important;
+}
+
+.btn-light {
+    /* Style du bouton inactif */
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #6c757d !important;
+}
+
+/* Assurer que le conteneur principal a un fond blanc et une ombre légère */
+.rounded {
+    border-radius: 10px !important;
+}
+.shadow-sm {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}

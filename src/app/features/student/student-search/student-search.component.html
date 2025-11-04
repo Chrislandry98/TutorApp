@@ -1,0 +1,99 @@
+<div class="tutor-search-page container py-5">
+  
+  <div class="header mb-4">
+    <h1 class="fw-bold display-6">Find Your Perfect Tutor</h1>
+    <p class="text-muted">Browse verified tutors and book your next session</p>
+  </div>
+
+  <div class="search-bar d-flex flex-column flex-md-row gap-3 mb-5 p-3 rounded shadow-sm bg-white border">
+    
+    <div class="input-group flex-grow-1">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input 
+        type="text" 
+        class="form-control form-control-lg border-0" 
+        placeholder="Search by tutor name or subject..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange($event)">
+    </div>
+
+    <div class="dropdown">
+      <select class="form-select form-select-lg" [(ngModel)]="selectedSubject" (change)="applyFilters()">
+        <option value="All Subjects">All Subjects</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Physics">Physics</option>
+        <option value="English">English</option>
+        </select>
+    </div>
+
+    <div class="dropdown">
+      <select class="form-select form-select-lg" [(ngModel)]="selectedGrade" (change)="applyFilters()">
+        <option value="All Grades">All Grades</option>
+        <option value="High School">High School</option>
+        <option value="University">University</option>
+        </select>
+    </div>
+  </div>
+
+  <div class="results-header d-flex justify-content-start mb-4">
+    <span class="badge text-bg-primary fs-6">{{ tutorsFound }} tutors found</span>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-md-6" *ngFor="let tutor of tutors">
+      <div class="card tutor-card h-100 p-3 shadow-sm border">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            
+            <div class="d-flex align-items-center flex-grow-1 me-3">
+              <img [src]="tutor.photoUrl" [alt]="tutor.name" class="tutor-avatar rounded-circle me-3">
+              <div>
+                <h5 class="fw-bold mb-0">{{ tutor.name }}</h5>
+                <span class="rating-text small text-warning">
+                  <i class="bi bi-star-fill me-1"></i> {{ tutor.rating }} ({{ tutor.reviews }} sessions)
+                </span>
+              </div>
+            </div>
+            
+            <div class="text-end price-block">
+              <h4 class="fw-bold text-primary mb-0">
+                {{ tutor.pricePerHour | currency:'USD':'symbol-narrow':'1.0-0' }}
+              </h4>
+              <span class="text-muted small">per hour</span>
+            </div>
+          </div>
+          
+          <p class="tutor-bio text-muted mb-3">{{ tutor.bio }}</p>
+
+          <div class="subjects-list d-flex gap-2 mb-3">
+            <span class="badge text-bg-secondary" *ngFor="let subject of tutor.subjects">{{ subject }}</span>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+
+            <ng-container *ngIf="tutor.isAvailable; else unavailableStatus">
+                <span class="availability-status text-success">
+                <i class="bi bi-circle-fill me-1"></i> Available today
+                </span>
+               <!--a routerLink="/tutor/{{ tutor.id }}" --> 
+               <a routerLink="/student/tutor"
+                class="btn btn-primary btn-sm btn-available">
+                View Profile
+                </a>
+            </ng-container>
+
+            <ng-template #unavailableStatus>
+                <span class="availability-status text-danger">
+                <i class="bi bi-circle-fill me-1"></i> Unavailable today
+                </span>
+                <button class="btn btn-secondary btn-sm" disabled>
+                Profile (Unavailable)
+                </button>
+            </ng-template>
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

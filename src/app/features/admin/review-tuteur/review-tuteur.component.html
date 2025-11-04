@@ -1,0 +1,41 @@
+<div class="container py-4">
+    
+    <h1 class="h3 fw-bold mb-1">Tutor Validation Queue</h1>
+    <p class="text-muted mb-4">Review and manage tutor documents to approve or reject validation requests.</p>
+
+    <section class="card shadow-sm p-4">
+        <h2 class="h5 fw-bold mb-3">Pending Tutors</h2>
+
+        <div class="table-responsive">
+            <table class="table table-borderless align-middle validation-table">
+                <thead>
+                    <tr class="text-muted small text-uppercase">
+                        <th scope="col">Tutor Name</th>
+                        <th scope="col">Subject Expertise</th>
+                        <th scope="col">Submitted On</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tutor of pendingTutors">
+                        <td><span class="fw-bold">{{ tutor.name }}</span></td>
+                        <td class="text-muted small">{{ tutor.subjectExpertise }}</td>
+                        <td class="text-muted small">{{ tutor.submittedOn }}</td>
+                        <td>
+                            <span class="badge py-2 px-3" [ngClass]="getStatusClass(tutor.status)">
+                                {{ tutor.status }}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm" (click)="reviewDocuments(tutor.tutorId)">
+                                Review Documents
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>

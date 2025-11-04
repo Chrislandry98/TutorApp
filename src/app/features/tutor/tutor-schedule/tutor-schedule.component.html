@@ -1,0 +1,135 @@
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2 mb-0">Manage Schedule</h1>
+            <p class="text-muted lead-sm mb-0">Set your availability for student bookings</p>
+        </div>
+        <button class="btn btn-primary" (click)="addTimeSlot()">
+            <i class="bi bi-plus-lg me-1"></i> Add Time Slot
+        </button>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="h4 fw-bold">{{ selectedDate }}</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8">
+            <div *ngIf="availableSlots.length === 0" class="alert alert-info text-center">
+                Aucun créneau disponible pour cette journée.
+            </div>
+            
+            <div *ngFor="let slot of availableSlots" class="card shadow-sm mb-3 p-3 slot-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-clock me-3 h5 text-muted mb-0"></i>
+                        <div>
+                            <p class="mb-0 fw-bold">{{ slot.startTime }} - {{ slot.endTime }}</p>
+                            <span class="text-muted small">{{ slot.duration }} minutes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-center">
+                        
+                        <span 
+                            class="badge me-3"
+                            [ngClass]="{ 
+                                'bg-primary': slot.status === 'Available', 
+                                'bg-success': slot.status === 'Booked',
+                                'bg-danger': slot.status === 'Disabled' 
+                            }">
+                            {{ slot.status }}
+                        </span>
+
+                        <button class="btn btn-sm btn-outline-danger border-0" (click)="deleteSlot(slot.id)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showModal" 
+     class="modal fade show d-block" 
+     tabindex="-1" 
+     role="dialog" 
+     aria-modal="true">
+    
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-header border-0 pb-0">
+                <div>
+                    <h5 class="modal-title fw-bold">Add New Time Slot</h5>
+                    <p class="text-muted mb-0 small">Create a new available time slot for student bookings</p>
+                </div>
+                <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body pt-3">
+                
+                <form (ngSubmit)="saveNewSlot()" #slotForm="ngForm">
+                    
+                    <div class="mb-3">
+                        <label for="slotDate" class="form-label small fw-bold text-muted">Date</label>
+                        <div class="input-group">
+                            <input 
+                                type="date" 
+                                class="form-control form-control-lg" 
+                                id="slotDate" 
+                                name="slotDate"
+                                placeholder="jj/mm/aaaa"
+                                [(ngModel)]="newSlot.date" 
+                                required>
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <label for="startTime" class="form-label small fw-bold text-muted">Start Time</label>
+                            <div class="input-group">
+                                <input 
+                                    type="time" 
+                                    class="form-control form-control-lg" 
+                                    id="startTime" 
+                                    name="startTime"
+                                    [(ngModel)]="newSlot.startTime" 
+                                    required>
+                                <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="endTime" class="form-label small fw-bold text-muted">End Time</label>
+                            <div class="input-group">
+                                <input 
+                                    type="time" 
+                                    class="form-control form-control-lg" 
+                                    id="endTime" 
+                                    name="endTime"
+                                    [(ngModel)]="newSlot.endTime" 
+                                    required>
+                                <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary w-100 btn-lg"
+                        [disabled]="!slotForm.form.valid">
+                        Add Time Slot
+                    </button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showModal" class="modal-backdrop fade show"></div>

@@ -1,0 +1,105 @@
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Styles de la carte de réservation (si elle est utilisée) */
+.booking-card {
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    position: relative; 
+    top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Badges (Sujets, Niveaux) */
+.subject-badge {
+    background-color: #f0f0f0 !important;
+    color: #333 !important;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 9999px; /* Utilisation de la classe Tailwind 'rounded-full' si dans Angular */
+    display: inline-block;
+}
+
+/* Badges de Validation/Vérification */
+.validation-badge, .verified-badge {
+    padding: 0.3em 0.6em;
+    font-size: 0.85em;
+    border-radius: 4px;
+    background-color: #e6f0ff !important; /* Remplacement de var(--primary-light) */
+    color: #007bff !important; /* Remplacement de var(--primary-color) */
+    font-weight: 600;
+}
+
+/* -------------------------------------------------------------------------- */
+/* CALENDRIER (Utilisé dans le composant de profil ou de réservation)         */
+/* -------------------------------------------------------------------------- */
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+.day-name {
+    font-size: 0.85em;
+    padding-bottom: 5px;
+    color: #6c757d;
+}
+.day-cell {
+    padding: 8px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.unavailable-day {
+    color: #ccc;
+    cursor: default;
+    background-color: #fafafa;
+}
+.available-day:hover {
+    background-color: #f0f0f0;
+}
+.selected-day {
+    background-color: #004b9b !important; /* Remplacement de var(--primary-color) */
+    color: white !important;
+    font-weight: bold;
+}
+
+/* Time Slots */
+.time-slot {
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+/* -------------------------------------------------------------------------- */
+/* BOUTON ET PROFIL                                                           */
+/* -------------------------------------------------------------------------- */
+
+.btn-primary {
+    background-color: #004b9b; /* Remplacement de var(--primary-color) */
+    border-color: #004b9b;
+    color: white; /* Ajouté pour la lisibilité */
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: background-color 0.2s;
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: #004b9b;
+    border-color: #004b9b;
+}
+.btn-primary:disabled {
+    opacity: 0.6;
+    background-color: #6c757d; /* Gris pour désactivé */
+    border-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Image de profil */
+.rounded-circle {
+    border-radius: 50%;
+    border: 3px solid #004b9b; /* Remplacement de var(--primary-color) */
+}

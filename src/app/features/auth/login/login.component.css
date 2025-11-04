@@ -1,0 +1,26 @@
+/* login.component.css */
+
+/* Centre le contenu sur toute la hauteur de la vue (min-vh-100 vient de Bootstrap) */
+.container {
+  min-height: 100vh;
+}
+
+/* Applique un style de "carte" pour encadrer le formulaire */
+/* Les styles de padding et de bordure sont implicites grâce aux classes Bootstrap, 
+   mais vous pouvez ajouter une couleur de fond et des ombres pour imiter l'image. */
+.col-lg-4 {
+    background-color: white; /* Pour le fond blanc de la carte */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Légère ombre pour le relief */
+    border-radius: 0.5rem; /* Coins légèrement arrondis */
+}
+
+/* Le conteneur parent (généralement body ou app-root) devrait avoir un fond noir ou gris foncé 
+   si vous voulez le contraste vu dans l'image. Ce style pourrait être dans src/styles.css. */
+/* Exemple dans src/styles.css pour le fond noir :
+   body {
+       background-color: #121212; 
+   }
+*/
+form div input{
+   font-size: 1em;
+}

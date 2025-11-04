@@ -1,0 +1,59 @@
+.my-sessions-page {
+    background-color: #f8f9fa; 
+    min-height: 100vh;
+}
+
+/* --- Cartes de Session --- */
+.session-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.tutor-avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+}
+
+/* --- Détails et Statut --- */
+.session-details {
+    padding-left: 1rem;
+}
+
+.detail-item i {
+    color: #6c757d;
+}
+
+.status-badge {
+    padding: 0.5em 0.8em;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Ajustement des couleurs pour les statuts */
+.status-badge.bg-primary {
+    background-color: #007bff !important;
+}
+
+/* --- Boutons d'Action --- */
+.actions .btn-primary {
+    background-color: #004b9b !important;
+    border-color: #004b9b !important;
+}
+
+/* Boutons de Filtre */
+.session-filters .btn-outline-secondary {
+    border-radius: 50px;
+    border-color: #ced4da;
+    color: #495057;
+    padding: 0.5rem 1.25rem;
+    font-weight: 500;
+}
+
+.session-filters .btn-outline-secondary.active {
+    background-color: #004b9b;
+    border-color: #004b9b;
+    color: white;
+}

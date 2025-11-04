@@ -1,0 +1,59 @@
+
+<div class="container py-4">
+    <button (click)="backToQueue()" class="btn btn-outline-secondary mb-4" title="Back to Validation Queue" style="margin-top: 5em;">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <h1 class="h3 fw-bold mb-4">Reviewing: {{ tutorDetails.name }} - {{ tutorDetails.subjects }}</h1>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+                <h2 class="h5 fw-bold mb-3">Tutor Profile</h2>
+                
+                <div class="d-flex align-items-center mb-3">
+                    <img src="/images-Homepage/tuteurs/tuteur3.png" 
+                         alt="Tutor Profile" 
+                         class="rounded-circle me-3" 
+                         style="width: 60px; height: 60px; object-fit: cover;">
+                    <div>
+                        <p class="mb-0 fw-bold">{{ tutorDetails.name }}</p>
+                        <span class="text-muted small">{{ tutorDetails.email }}</span>
+                    </div>
+                </div>
+
+                <p class="mb-1 fw-bold">Subjects:</p>
+                <p class="text-muted small mb-3">{{ tutorDetails.subjects }}</p>
+
+                <p class="mb-1 fw-bold">Phone:</p>
+                <p class="text-muted small mb-3">{{ tutorDetails.phone }}</p>
+
+                <p class="mb-1 fw-bold">Experience:</p>
+                <p class="text-muted small mb-0">{{ tutorDetails.experience }}</p>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-sm p-4 h-100">
+                <h2 class="h5 fw-bold mb-3">Submitted Documents</h2>
+                
+                <div *ngFor="let doc of tutorDetails.documents" class="d-flex justify-content-between align-items-center border-bottom py-2">
+                    <p class="mb-0">{{ doc.name }}</p>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="downloadDocument(doc.fileName)">
+                        <i class="bi bi-download"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm p-4 mt-4">
+        <h2 class="h5 fw-bold mb-3">Validation Actions</h2>
+        
+        <div class="d-flex gap-2">
+            <button class="btn btn-success btn-lg" (click)="approveTutor()">Approve Tutor</button>
+            <button class="btn btn-danger btn-lg" (click)="rejectTutor()">Reject Tutor</button>
+            <button class="btn btn-outline-warning btn-lg text-dark" (click)="requestMoreInfo()">Request More Info</button>
+        </div>
+    </div>
+</div>

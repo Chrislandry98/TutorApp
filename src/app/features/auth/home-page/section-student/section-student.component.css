@@ -1,0 +1,95 @@
+/* --- Styles pour la Section HÉROS (Réutilisés du premier échange) --- */
+.hero-background {
+    /* Dégradé de fond basé sur l'image_fee7e1.jpg */
+    background-color: #8B3FBF
+}
+.hero-background .row {
+    max-width: 1400px;
+    margin: auto;
+}
+.custom-badge-glow {
+    background-color: transparent !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    /* ... (autres styles d'animation si nécessaires) ... */
+}
+.custom-btn-start {
+    color: #5c2d91;
+    font-weight: bold;
+}
+.custom-btn-explore {
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+
+/* --- SECTION TÉMOIGNAGES (Basé sur image_35c675.png) --- */
+
+.temoignages-section {
+    background-color: #fcfcfc;
+}
+
+.temoignage-card {
+    border: 1px solid #f0f0f0; /* Bordure très légère */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03); /* Ombre douce */
+    transition: box-shadow 0.2s;
+}
+
+.temoignage-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Ombre légère au survol */
+}
+
+.rating-stars i {
+    color: #ffc107; /* Jaune standard Bootstrap */
+    font-size: 1.1rem;
+    margin-right: 2px;
+}
+
+.review-text {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.auteur-text strong {
+    font-weight: 600;
+    color: #333;
+}
+
+
+/* --- SECTION CTA DE BAS DE PAGE (Basé sur image_35c675.png) --- */
+
+.cta-section {
+    /* Dégradé de fond pour la section CTA */
+    background-color: #8B3FBF;
+}
+
+.cta-section .display-5 {
+    font-size: 2.5rem;
+}
+
+.cta-btn-main {
+    /* Bouton principal (blanc sur violet) */
+    color: #8a2be2 !important; 
+    font-weight: 600;
+}
+
+.cta-btn-main:hover {
+    background-color: #f0f0f0 !important;
+}
+
+.cta-btn-secondary {
+    /* Bouton secondaire (contour blanc) */
+    border-color: white !important;
+    color: white !important;
+    font-weight: 500;
+}
+
+.cta-btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.cta-note {
+    font-size: 0.85rem;
+}

@@ -1,0 +1,11 @@
+/* Style pour simuler la zone de drag and drop */
+.border-dashed {
+    /* Utilise l'attribut stroke-dasharray pour les bordures SVG/CSS */
+    border-style: dashed !important;
+}
+
+/* Vous pouvez ajouter un léger effet de transition/hover si vous voulez */
+.border-dashed:hover {
+    background-color: #f0f0f0; /* Un gris très clair au survol */
+    transition: background-color 0.2s ease;
+}

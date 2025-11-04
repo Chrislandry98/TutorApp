@@ -1,0 +1,155 @@
+<div class="container py-4">
+    
+    <h1 class="h3 fw-bold mb-1">Tutor Profile Settings</h1>
+    <p class="text-muted mb-4">Manage your public profile, expertise, and teaching rates.</p>
+
+    <div class="row g-4">
+        
+        <div class="col-lg-6">
+            
+            <div class="card shadow-sm p-4 mb-4">
+                <h2 class="h5 fw-bold mb-3">Personal Information</h2>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <img [src]="tutorProfile.profilePictureUrl" 
+                         alt="Profile Picture" 
+                         class="rounded-circle me-4" 
+                         style="width: 80px; height: 80px; object-fit: cover;">
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary" (click)="updateProfilePicture()">
+                            <i class="bi bi-upload me-1"></i> Update Picture
+                        </button>
+                        <p class="text-muted small mt-1 mb-0">Max size 2MB, formats: JPG, PNG.</p>
+                    </div>
+                </div>
+
+                <form #personalForm="ngForm" (ngSubmit)="saveChanges('Personal Information')">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="tutorProfile.fullName" name="fullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" class="form-control" value="{{ tutorProfile.email }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="text" class="form-control" [(ngModel)]="tutorProfile.phone" name="phone">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2" [disabled]="!personalForm.valid">Save Personal Info</button>
+                </form>
+            </div>
+
+            <div class="card shadow-sm p-4 mb-4">
+                <h2 class="h5 fw-bold mb-3">Change Password</h2>
+                
+                <form (ngSubmit)="changePassword()">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Current Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">New Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.newPassword" name="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Confirm New Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.confirmPassword" name="confirmPassword" required>
+                        <div class="form-text text-danger" *ngIf="passwordForm.newPassword && passwordForm.confirmPassword && passwordForm.newPassword !== passwordForm.confirmPassword">
+                            Passwords do not match.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning mt-2">Update Password</button>
+                </form>
+            </div>
+            
+            <div class="card shadow-sm p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h5 fw-bold mb-0">Biography & Description</h2>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="toggleBioEdit()">
+                        <i class="bi bi-{{ isBioEditing ? 'x-lg' : 'pencil' }}"></i> {{ isBioEditing ? 'Cancel' : 'Edit' }}
+                    </button>
+                </div>
+                
+                <div *ngIf="!isBioEditing">
+                    <p class="text-muted">{{ tutorProfile.bio }}</p>
+                </div>
+                
+                <div *ngIf="isBioEditing">
+                    <textarea class="form-control mb-3" rows="5" [(ngModel)]="editingBio" name="editingBio" maxlength="500"></textarea>
+                    <div class="form-text text-end">{{ 500 - editingBio.length }} characters remaining</div>
+                    <button class="btn btn-success mt-2" (click)="saveBio()">Save Biography</button>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="col-lg-6">
+            
+            <div class="card shadow-sm p-4 h-100">
+                <h2 class="h5 fw-bold mb-3">Expertise & Rates</h2>
+                
+                <div class="mb-4 p-3 bg-light rounded">
+                    <label class="form-label small fw-bold">Default Hourly Rate (Base)</label>
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <input type="number" 
+                               class="form-control" 
+                               [(ngModel)]="tutorProfile.baseRate" 
+                               name="baseRate" 
+                               min="10" 
+                               (change)="saveChanges('Base Rate')">
+                        <span class="input-group-text">/hr</span>
+                    </div>
+                </div>
+
+                <p class="fw-bold small mb-2">Specific Subject Rates:</p>
+                <ul class="list-group mb-4">
+                    <li *ngFor="let exp of tutorProfile.expertise; let i = index" 
+                        class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="fw-bold">{{ exp.subjectName }}</span>
+                            <span class="text-muted small ms-2">({{ exp.levelName }})</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="fw-bold text-primary me-3">{{ formatCurrency(exp.hourlyRate) }}</span>
+                            <button class="btn btn-sm btn-outline-danger" (click)="removeExpertise(i)">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </li>
+                    <li *ngIf="tutorProfile.expertise.length === 0" class="list-group-item text-center text-muted small">
+                        No expertise added yet.
+                    </li>
+                </ul>
+
+                <h3 class="h6 fw-bold mb-3">Add New Expertise</h3>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <select class="form-select" [(ngModel)]="newExpertise.subjectName" name="newSubject">
+                            <option value="">Subject</option>
+                            <option *ngFor="let sub of availableSubjects" [value]="sub">{{ sub }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-select" [(ngModel)]="newExpertise.levelName" name="newLevel">
+                            <option value="">Level</option>
+                            <option *ngFor="let level of availableLevels" [value]="level">{{ level }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" [(ngModel)]="newExpertise.hourlyRate" name="newRate" placeholder="Rate">
+                        </div>
+                    </div>
+                    <div class="col-12">
+                         <button class="btn btn-success w-100" (click)="addExpertise()">
+                            <i class="bi bi-plus-lg me-1"></i> Add Expertise Area
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

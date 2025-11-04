@@ -1,0 +1,43 @@
+/* ------------------------------------------- */
+/* Styles pour Tutor Schedule Manager */
+/* ------------------------------------------- */
+
+/* Ajustement de la taille de la sous-description */
+.lead-sm {
+    font-size: 0.95rem;
+}
+
+/* S'assurer que les icônes dans la liste des créneaux sont bien dimensionnées */
+.slot-item .bi-clock {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+/* Styles pour les champs d'entrée de la modale */
+.modal-body .form-label {
+    font-size: 0.75rem; /* Rendre le label plus petit, comme dans l'image */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Rendre l'input plus grand dans la modale */
+.modal-body .form-control-lg {
+    min-height: calc(2.5em + 0.75rem + 2px); /* Ajustement pour une hauteur standard */
+}
+
+/* Rendre le bouton de soumission plus grand et proéminent */
+.modal-body .btn-lg {
+    font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+}
+
+/* Style spécifique pour le bouton de suppression (petit et discret) */
+.btn-outline-danger.border-0 {
+    padding: 0.25rem 0.5rem;
+    font-size: 1rem;
+}
+
+.btn-outline-danger.border-0:hover {
+    color: #fff;
+    background-color: var(--bs-danger);
+}

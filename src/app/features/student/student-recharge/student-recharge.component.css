@@ -1,0 +1,65 @@
+.recharge-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+}
+
+/* Solde Actuel */
+.current-balance {
+    background-color: #e6f0ff; /* Bleu très clair */
+    border: 1px solid #cce0ff;
+}
+.current-balance .text-primary {
+    color: #004b9b !important;
+}
+
+/* --- Options de Recharge (Boutons Radio stylisés) --- */
+.recharge-option {
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background-color: white;
+}
+
+.recharge-option:hover {
+    border-color: #004b9b;
+}
+
+/* État sélectionné */
+.recharge-option.selected {
+    border-color: #004b9b;
+    box-shadow: 0 0 0 0.25rem rgba(0, 75, 155, 0.25);
+    background-color: #f0f7ff;
+}
+
+/* Champ Montant Personnalisé */
+.custom-amount-option .form-control {
+    text-align: right;
+    border: none;
+    padding: 0;
+    font-weight: bold;
+    background-color: transparent;
+}
+.custom-amount-option .form-control:focus {
+    box-shadow: none;
+}
+
+/* --- Récapitulatif --- */
+.recharge-summary {
+    background-color: #f1f1f1;
+    border-radius: 8px;
+}
+.recharge-summary .text-primary {
+    color: #004b9b !important;
+}
+
+/* --- Bouton Soumettre --- */
+.btn-primary {
+    background-color: #004b9b !important;
+    border-color: #004b9b !important;
+}

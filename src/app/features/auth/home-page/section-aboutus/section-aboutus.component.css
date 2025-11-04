@@ -1,0 +1,67 @@
+.why-us-section {
+    background-color: #f7f7f7; /* Fond légèrement gris comme dans l'image */
+}
+
+/* Style de la Carte */
+.feature-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); /* Ombre douce */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px); /* Légère élévation au survol */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.15rem;
+    color: #333;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* --- Styles des Conteneurs d'Icônes --- */
+
+.icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px; /* Coins arrondis du fond de l'icône */
+    
+    /* Assure que l'icône est blanche et centrée */
+    color: white; 
+    font-size: 1.5rem;
+}
+
+/* Définition des classes de couleur personnalisées (Dégradés) */
+
+/* 1. Bleu (Tuteurs vérifiés) */
+.blue-icon-bg {
+    background: linear-gradient(135deg, #6a82fb 0%, #fc7a7a 100%);
+    box-shadow: 0 4px 10px rgba(106, 130, 251, 0.5);
+}
+
+/* 2. Vert (Toutes les matières) */
+.green-icon-bg {
+    background: linear-gradient(135deg, #a7ff83 0%, #17ad3d 100%);
+    box-shadow: 0 4px 10px rgba(167, 255, 131, 0.5);
+}
+
+/* 3. Violet (Horaires flexibles) */
+.purple-icon-bg {
+    background: linear-gradient(135deg, #ff8c00 0%, #ff00ff 100%);
+    box-shadow: 0 4px 10px rgba(255, 140, 0, 0.5);
+}
+
+/* 4. Orange (Résultats garantis) */
+.orange-icon-bg {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.5);
+}

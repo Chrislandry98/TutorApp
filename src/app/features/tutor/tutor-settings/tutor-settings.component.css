@@ -1,0 +1,30 @@
+/* Styles pour la page Edit Profile */
+
+/* Ajustement de la taille de la sous-description */
+.lead-sm {
+    font-size: 0.95rem;
+}
+
+/* Rendre le badge d'expertise légèrement plus grand et utilisable comme élément interactif */
+.badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+}
+
+/* Style spécifique pour le bouton de suppression à l'intérieur du badge */
+.badge .btn-close {
+    font-size: 0.5rem;
+    margin-left: 0.5rem;
+    padding: 0;
+    opacity: 0.6;
+}
+
+.badge .btn-close:hover {
+    opacity: 1;
+}
+
+/* S'assurer que les étiquettes des formulaires sont claires */
+.form-label {
+    font-weight: 500;
+}

@@ -1,0 +1,134 @@
+<div class="dashboard-container p-4 p-md-5">
+  
+  <div class="header mb-5">
+    <h2 class="fw-bold">Welcome back, {{ studentName }}</h2>
+    <p class="text-muted">Manage your sessions and track your learning progress</p>
+  </div>
+  
+  <div class="row g-4 mb-5">
+
+    <div class="col-12 col-lg-4">
+      <div class="card stat-card p-4 h-100">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <h6 class="text-muted mb-0">Account Balance</h6>
+          <i class="bi bi-box-arrow-up-right text-primary"></i>
+        </div>
+        <h3 class="fw-bold mb-3">{{ accountBalance | currency:'USD':'symbol':'1.2-2' }}</h3>
+        <button class="btn btn-primary btn-sm" (click)="rechargeBalance()">Recharge Account</button>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="card stat-card p-4 h-100">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <h6 class="text-muted mb-0">Upcoming Sessions</h6>
+          <i class="bi bi-calendar-check text-primary"></i>
+        </div>
+        <h3 class="fw-bold mb-1">{{ scheduledSessionsCount }}</h3>
+        <p class="text-muted mb-0">Sessions scheduled</p>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="card stat-card p-4 h-100">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <h6 class="text-muted mb-0">Completed Sessions</h6>
+          <i class="bi bi-graph-up-arrow text-primary"></i>
+        </div>
+        <h3 class="fw-bold mb-1">{{ completedSessionsCount }}</h3>
+        <p class="text-muted mb-0">Total sessions</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-12 col-lg-8">
+      
+      <div class="card content-card mb-4 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="fw-bold mb-0">Upcoming Sessions</h4>
+          <button class="btn btn-sm btn-outline-secondary"(click)="getSessions()">View All</button>
+        </div>
+        
+        <div class="session-item d-flex justify-content-between align-items-center py-3" 
+             *ngFor="let session of upcomingSessions">
+          
+          <div class="d-flex align-items-center">
+            <img [src]="session.tutorPhotoUrl" alt="Tutor Photo" class="tutor-avatar me-3">
+            <div>
+              <h6 class="mb-0 fw-bold">{{ session.tutorName }}</h6>
+              <span class="text-muted small">{{ session.subject }} · {{ session.duration }} minutes</span>
+            </div>
+          </div>
+          
+          <div class="text-end">
+            <span class="badge text-success-emphasis bg-success-subtle fw-bold me-2">
+              {{ session.status }}
+            </span>
+            <span class="text-muted small">{{ session.date }}</span>
+          </div>
+        </div>
+        
+        <p *ngIf="upcomingSessions.length === 0" class="text-muted text-center mt-3">No upcoming sessions scheduled.</p>
+      </div>
+      
+      <div class="card content-card p-4">
+        <h4 class="fw-bold mb-4">Recent Transactions</h4>
+        
+        <div class="transaction-item d-flex justify-content-between align-items-center py-2" 
+             *ngFor="let tx of recentTransactions">
+          
+          <div class="d-flex align-items-center">
+            <i class="bi me-3 fs-5"
+               [ngClass]="{ 
+                 'bi-arrow-down-left-circle-fill text-danger': tx.type === 'Payment', 
+                 'bi-arrow-up-right-circle-fill text-success': tx.type === 'Recharge' 
+               }"></i>
+            <div>
+              <h6 class="mb-0">{{ tx.description }}</h6>
+              <span class="text-muted small">{{ tx.date }}</span>
+            </div>
+          </div>
+          
+          <span class="fw-bold"
+                [ngClass]="{'text-success': tx.amount > 0, 'text-danger': tx.amount < 0}">
+            {{ tx.amount | currency:'USD':'symbol':'1.2-2' }}
+          </span>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="col-12 col-lg-4">
+      
+      <div class="card content-card mb-4 p-4">
+        <h4 class="fw-bold mb-3">Quick Actions</h4>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" style="background-color: #004b9b;" (click)="findTutor()">Find a Tutor</button>
+          <button class="btn btn-outline-secondary"(click)="getSessions()">My Sessions</button>
+          <button class="btn btn-outline-secondary" (click)="rechargeBalance()">Recharge Balance</button>
+          <button class="btn btn-outline-secondary" (click)="editProfile()">Edit Profile</button>
+        </div>
+      </div>
+
+      <div class="card content-card p-4">
+        <h4 class="fw-bold mb-3">Learning Stats</h4>
+        <div class="stats-grid">
+          <div class="d-flex justify-content-between py-1">
+            <span>Total Hours</span>
+            <span class="fw-bold">{{ learningStats.totalHours }} hrs</span>
+          </div>
+          <div class="d-flex justify-content-between py-1">
+            <span>Favorite Subject</span>
+            <span class="fw-bold text-primary">{{ learningStats.favoriteSubject }}</span>
+          </div>
+          <div class="d-flex justify-content-between py-1">
+            <span>Active Tutors</span>
+            <span class="fw-bold">{{ learningStats.activeTutors }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

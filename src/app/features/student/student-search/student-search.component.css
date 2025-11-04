@@ -1,0 +1,60 @@
+.tutor-search-page {
+    background-color: #f8f9fa; /* Fond légèrement gris */
+}
+
+/* Styles de la Barre de Recherche */
+.search-bar {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+.search-bar .input-group-text,
+.search-bar .form-select {
+    font-size: 1rem;
+}
+
+/* Badge "tutors found" */
+.results-header .badge {
+    background-color: #004b9b !important;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+/* Carte du Tuteur */
+.tutor-card {
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+.tutor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Avatar du Tuteur */
+.tutor-avatar {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+/* Bloc Prix */
+.price-block {
+    white-space: nowrap; /* Empêche la coupure du prix */
+}
+.price-block h4 {
+    color: #004b9b !important; /* Couleur primaire Bootstrap */
+}
+
+/* Disponibilité */
+.availability-status .text-success {
+    color: #28a745 !important;
+    font-size: 0.7rem; /* Taille de l'icône de cercle */
+}
+
+/* Badges Sujets */
+.subjects-list .badge {
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: normal;
+    padding: 0.5em 0.75em;
+    font-size: 0.85rem;
+}

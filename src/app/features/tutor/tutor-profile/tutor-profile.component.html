@@ -1,0 +1,113 @@
+<div class="container py-5">
+    
+    <div class="d-flex align-items-center mb-5 pb-3 border-bottom">
+        <img src="images-Homepage/tuteurs/tuteur1.png" alt="{{ tutor.name }}" class="rounded-circle me-4" style="width: 100px; height: 100px; object-fit: cover;">
+        <div>
+            <h1 class="h3 fw-bold mb-1">{{ tutor.name }}</h1>
+            <div class="d-flex align-items-center mb-2">
+                <span class="text-warning me-2">
+                    <i class="bi bi-star-fill"></i> {{ tutor.rating }} ({{ tutor.reviews }} reviews)
+                </span>
+                <span *ngIf="tutor.validated" class="badge bg-success-subtle text-success fw-semibold validation-badge">
+                    <i class="bi bi-check-circle-fill me-1"></i> Validated
+                </span>
+            </div>
+            <p class="text-secondary mb-0">{{ tutor.title }}</p>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        
+        <div class="col-lg-8">
+            
+            <div class="mb-5">
+                <h4 class="fw-bold mb-3">About {{ tutor.name }}</h4>
+                <p>{{ tutor.bio }}</p>
+            </div>
+            
+            <div class="mb-5">
+                <h4 class="fw-bold mb-3">Expertise</h4>
+                
+                <h5 class="h6 fw-bold">Subjects</h5>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <span *ngFor="let subject of tutor.subjects" class="badge rounded-pill bg-light text-dark subject-badge">{{ subject }}</span>
+                </div>
+                
+                <h5 class="h6 fw-bold">Grade Levels</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <span *ngFor="let level of tutor.gradeLevels" class="badge rounded-pill bg-light text-dark subject-badge">{{ level }}</span>
+                </div>
+            </div>
+            
+            <div class="mb-5">
+                <h4 class="fw-bold mb-3">Verified Documents</h4>
+                <ul class="list-unstyled">
+                    <li *ngFor="let doc of tutor.documents" class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <span><i class="bi bi-file-earmark-text me-2"></i> {{ doc.name }}</span>
+                        <span *ngIf="doc.verified" class="badge bg-primary-subtle text-primary verified-badge">
+                            Verified
+                        </span>
+                        <span *ngIf="!doc.verified" class="badge bg-warning-subtle text-warning">Pending</span>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm p-4 sticky-top booking-card">
+                
+                <h4 class="h5 fw-bold mb-3">Select a Session Slot</h4>
+                
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="prevMonth()"><i class="bi bi-chevron-left"></i></button>
+                    <span class="fw-bold text-center">{{ getMonthName() }}</span>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="nextMonth()"><i class="bi bi-chevron-right"></i></button>
+                </div>
+                
+                <div class="calendar-grid mb-4">
+                    <div class="day-name fw-semibold">Su</div>
+                    <div class="day-name fw-semibold">Mo</div>
+                    <div class="day-name fw-semibold">Tu</div>
+                    <div class="day-name fw-semibold">We</div>
+                    <div class="day-name fw-semibold">Th</div>
+                    <div class="day-name fw-semibold">Fr</div>
+                    <div class="day-name fw-semibold">Sa</div>
+                    
+                    <div *ngFor="let i of [].constructor(currentDate.getDay())"></div>
+
+                    <div *ngFor="let day of calendarData" 
+                         class="day-cell text-center"
+                         [class.selected-day]="day.isSelected"
+                         [class.available-day]="day.isAvailable"
+                         [class.unavailable-day]="!day.isAvailable"
+                         (click)="day.isAvailable && selectDay(day.day)">
+                        {{ day.day }}
+                    </div>
+                </div>
+
+                <h6 class="fw-bold mb-2 text-primary">
+                    <i class="bi bi-calendar-check me-2"></i> 
+                    Available Times ({{ selectedDate | date:'MMM d' }})
+                </h6>
+                
+                <div *ngIf="availableTimes.length === 0" class="alert alert-warning small text-center" role="alert">
+                    No slots available for this date.
+                </div>
+                
+                <div *ngIf="availableTimes.length > 0" class="d-flex flex-wrap gap-2 mb-4">
+                    <button *ngFor="let time of availableTimes" class="btn btn-outline-primary btn-sm time-slot">{{ time }}</button>
+                </div>
+
+                <button 
+                    class="btn btn-primary btn-lg w-100 fw-bold" 
+                    [disabled]="availableTimes.length === 0"
+                    (click)="bookSession()">
+                    Book a Session
+                </button>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>

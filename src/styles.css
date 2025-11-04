@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    /* 1. Applique Nunito comme police principale */
+    font-family: 'Nunito', sans-serif !important; 
+    
+    /* 2. Utilisez 'sans-serif' comme solution de secours (fallback) */
+    /* si Nunito ne peut pas être chargée */
+}

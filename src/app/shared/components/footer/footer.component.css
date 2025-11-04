@@ -1,0 +1,38 @@
+/* Style du Footer Global du Site */
+
+.site-footer {
+    /* Couleur sombre pour ancrer la page */
+    background-color: #212529; 
+    color: #DDDDDD; /* Texte clair par défaut */
+    border-top: 5px solid #712CF9; /* Ligne d'accentuation pour lier au Header */
+}
+
+/* Style des liens */
+.site-footer a {
+    color: #CCCCCC; /* Liens discrets */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* Effet de survol (hover) utilisant la couleur d'accentuation du Header */
+.site-footer a:hover {
+    color: #712CF9; /* Violet d'accentuation */
+    text-decoration: underline;
+}
+
+/* Style des icônes sociales (elles héritent du blanc par défaut dans le HTML) */
+.social-links a:hover {
+    color: #712CF9 !important;
+}
+
+.list-unstyled li{
+    cursor: pointer;
+}
+/* Correction pour les écrans plus petits: s'assurer que l'alignement est correct */
+/* Le d-flex align-items-md-center sur la colonne 2 gère le centrage sur desktop */
+@media (max-width: 768px) {
+    .site-footer .col-md-4 {
+        /* Assurer l'alignement à gauche sur mobile */
+        align-items: flex-start !important; 
+    }
+}

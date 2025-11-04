@@ -1,0 +1,53 @@
+<section class="temoignages-section py-5">
+  <div class="container py-4">
+    
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Ce que disent nos étudiants</h2>
+      <p class="text-muted">Des milliers d'étudiants ont transformé leurs résultats</p>
+    </div>
+    
+    <div class="row g-4 justify-content-center">
+      
+      <div class="col-12 col-md-4" *ngFor="let temoignage of temoignages">
+        <div class="card temoignage-card h-100 p-3">
+          <div class="card-body">
+            
+            <div class="rating-stars mb-3">
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+              <i class="bi bi-star-fill"></i>
+            </div>
+            
+            <p class="review-text mb-4">{{ temoignage.avis }}</p>
+            
+            <p class="auteur-text text-muted mb-0">
+              — <strong>{{ temoignage.auteur }}</strong> {{ temoignage.details }}
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+<section class="cta-section text-center p-12" style="padding: 5em 5em;">
+  <h2 class="display-5 fw-bold text-white mb-3">Prêt à transformer tes résultats?</h2>
+  <p class="lead text-white-50 mb-4">Rejoins des milliers d'étudiants qui réussissent déjà avec TutorHub</p>
+  
+  <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3 mb-3">
+    
+    <a href="#" class="btn btn-lg btn-light cta-btn-main">
+      Créer un compte étudiant <i class="bi bi-arrow-right ms-2"></i>
+    </a>
+    
+    <a href="#" class="btn btn-lg btn-outline-light cta-btn-secondary">
+      Devenir tuteur
+    </a>
+  </div>
+  
+  <p class="cta-note text-white-50">Aucune carte de crédit requise • Inscription gratuite.</p>
+</section>

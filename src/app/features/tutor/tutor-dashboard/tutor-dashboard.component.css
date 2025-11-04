@@ -1,0 +1,35 @@
+/* ------------------------------------------- */
+/* Styles pour le Tableau de Bord (Tutor Dashboard) */
+/* ------------------------------------------- */
+
+/* S'assurer que les icônes Bootstrap sont bien centrées verticalement */
+.bi {
+    vertical-align: -0.125em;
+    font-size: 1.15em; /* L'icône dans le badge Verified */
+}
+
+/* Styles pour les icônes des cartes (StatsCardComponent) */
+/* Le code HTML utilise h5 pour la taille, ce n'est donc pas strictement nécessaire ici */
+.card .h5 {
+    font-size: 1.5rem; /* Ajuste la taille de l'icône dans les cartes */
+    opacity: 0.7; /* Pour qu'elles soient un peu plus subtiles */
+}
+
+
+/* Styles pour les sessions à venir */
+/* Petite mise en forme pour le rond d'initiale de l'étudiant si vous n'utilisez pas de photo */
+.rounded-circle.bg-light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; 
+    height: 40px;
+    flex-shrink: 0; /* Empêche le rétrécissement sur les petits écrans */
+}
+
+.rounded-circle.bg-light .bi-person {
+    font-size: 1.5rem;
+}
+
+/* Vous pourriez aussi ajouter des styles pour la partie Quick Actions ou les titres si vous voulez une police différente, mais 
+   avec Bootstrap, les styles par défaut sont généralement suffisants. */

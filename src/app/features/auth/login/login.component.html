@@ -1,0 +1,38 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="row w-100">
+    <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto p-4">
+
+      <h1 class="text-center mb-4" style="font-size: 2em;">Welcome to TutorApp</h1>
+      <h2 class="text-center mb-4" style="font-size: 1em;">Sign in to your account to continue</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="testLogin()">
+        <div class="mb-3">
+          <label for="email" class="form-label visually-hidden">Email</label>
+          <input type="email" class="form-control form-control-lg" id="email" placeholder="Email" required formControlName="email">
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label visually-hidden">Password</label>
+          <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" required formControlName="password">
+        </div>
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" type="checkbox" value="" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">
+            Remember me
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" [disabled]="loginForm.invalid" style="background-color:rgb(79, 79, 247);">Login</button>
+
+        <div class="text-center">
+          <a routerLink="/forgotpassword" class="d-block mb-3 text-decoration-none">Forgot password?</a>
+          <p class="mt-4">
+            Don't have an account? <a routerLink="/register" class="text-decoration-none">Sign up</a>
+          </p>
+        </div>
+      </form>
+      
+    </div>
+  </div>
+</div>

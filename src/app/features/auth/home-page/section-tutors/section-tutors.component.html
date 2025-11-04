@@ -1,0 +1,50 @@
+<section class="tuteurs-populaires py-5">
+  <div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      </div>
+
+    <div class="row g-4 mb-5">
+      
+      <div class="col-12 col-md-4" *ngFor="let tuteur of tuteurs">
+        <div class="card tuteur-card h-100">
+          <div class="image-container">
+            <img [src]="tuteur.photoUrl" [alt]="tuteur.nom" class="card-img-top">
+            
+            <span class="badge tuteur-badge"
+                  [class.bg-warning]="tuteur.badge === 'Top Tuteur'"
+                  [class.bg-info]="tuteur.badge === 'Populaire'"
+                  [class.bg-success]="tuteur.badge === 'Meilleur Choix'">
+              {{ tuteur.badge }}
+            </span>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title fw-bold">{{ tuteur.nom }}</h5>
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <span class="subject-text">{{ tuteur.matiere }}</span>
+                <span class="rating-text">
+                  <i class="bi bi-star-fill text-warning me-1"></i> {{ tuteur.note }} ({{ tuteur.avis }})
+                </span>
+              </div>
+              <span class="price-text fw-bold">{{ tuteur.prixHeure | currency:'EUR':'symbol':'1.0-0' }}/h</span>
+            </div>
+            <a href="/view-profile" class="btn btn-primary w-100 mt-3 btn-voir-profil">Voir le profil</a>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    <div class="stats-bar p-4 p-md-5 rounded">
+      <div class="row text-white text-center">
+        
+        <div class="col-6 col-md-3 stat-item" *ngFor="let stat of stats; let i = index"
+             [class.mt-4]="i >= 2 && stats.length > 2"> 
+          <div class="stat-value fw-bold display-4">{{ stat.valeur }}</div>
+          <div class="stat-label">{{ stat.libelle }}</div>
+        </div>
+        </div>
+    </div>
+
+  </div>
+</section>

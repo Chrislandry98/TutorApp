@@ -1,0 +1,102 @@
+<div class="container py-4">
+    <h1 class="h3 fw-bold mb-1">User Management</h1>
+    <p class="text-muted mb-4">View, filter, and manage all platform users (Students and Tutors).</p>
+
+    <div class="card shadow-sm p-4 mb-5">
+        <div class="row g-3 align-items-end">
+            
+            <div class="col-lg-4 col-md-6">
+                <label for="search" class="form-label visually-hidden">Search User</label>
+                <input type="text" 
+                       id="search" 
+                       class="form-control" 
+                       placeholder="Search by name or email..."
+                       [(ngModel)]="filters.search"
+                       (ngModelChange)="applyFilters()" 
+                       name="search">
+            </div>
+            
+            <div class="col-lg-3 col-md-3">
+                <label for="role" class="form-label visually-hidden">Filter by Role</label>
+                <select id="role" class="form-select" [(ngModel)]="filters.role" (ngModelChange)="applyFilters()" name="role">
+                    <option value="">All Roles</option>
+                    <option value="Tutor">Tutor</option>
+                    <option value="Student">Student</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+            
+            <div class="col-lg-3 col-md-3">
+                <label for="status" class="form-label visually-hidden">Filter by Status</label>
+                <select id="status" class="form-select" [(ngModel)]="filters.status" (ngModelChange)="applyFilters()" name="status">
+                    <option value="">All Statuses</option>
+                    <option value="Active">Active</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Suspended">Suspended</option>
+                </select>
+            </div>
+            
+            <div class="col-lg-2 col-md-12">
+                <button class="btn btn-outline-secondary w-100" (click)="resetFilters()">Reset Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm p-4">
+        <h2 class="h5 fw-bold mb-3">User List ({{ displayedUsers.length }} results)</h2>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="text-muted small text-uppercase">
+                        <th scope="col">User</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Last Activity</th>
+                        <th scope="col" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of displayedUsers">
+                        <td>
+                            <p class="mb-0 fw-bold">{{ user.name }}</p>
+                            <span class="text-muted small">{{ user.email }}</span>
+                        </td>
+                        
+                        <td>
+                            <span class="fw-bold" [ngClass]="getRoleClass(user.role)">
+                                {{ user.role }}
+                            </span>
+                        </td>
+                        
+                        <td>
+                            <span class="badge" [ngClass]="getStatusClass(user.status)">
+                                {{ user.status }}
+                            </span>
+                            <i *ngIf="user.warningCount > 0" class="bi bi-exclamation-triangle-fill text-warning ms-2 small" title="{{ user.warningCount }} warnings"></i>
+                        </td>
+                        
+                        <td class="text-muted small">{{ user.lastActivity }}</td>
+                        
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary me-2" (click)="editUser(user.id)" title="Edit Profile">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            
+                            <button class="btn btn-sm" 
+                                    [ngClass]="{'btn-outline-danger': user.status === 'Active', 'btn-outline-success': user.status !== 'Active'}"
+                                    (click)="toggleStatus(user)"
+                                    title="{{ user.status === 'Active' ? 'Suspend User' : 'Activate User' }}">
+                                <i class="bi" [class.bi-lock]="user.status === 'Active'" [class.bi-unlock]="user.status !== 'Active'"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div *ngIf="displayedUsers.length === 0" class="alert alert-light text-center mt-3">
+            No users match the current filter criteria.
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+.dashboard-container {
+    background-color: #f8f9fa; /* Fond très léger */
+    min-height: 100vh;
+}
+
+.stat-card, .content-card {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05); /* Ombre douce */
+    background-color: white;
+}
+
+/* Style spécifique pour la carte Solde */
+.stat-card .btn-primary {
+    background-color: #004b9b;
+    border-color: #004b9b;
+}
+
+/* --- Widgets de Contenu --- */
+
+/* Session Item */
+.tutor-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.session-item {
+    border-bottom: 1px solid #f0f0f0;
+}
+.session-item:last-child {
+    border-bottom: none;
+}
+
+/* Transaction Item */
+.transaction-item {
+    border-bottom: 1px solid #f0f0f0;
+}
+.transaction-item:last-child {
+    border-bottom: none;
+}
+.transaction-item i {
+    width: 25px;
+    text-align: center;
+}
+
+/* Stats Grid */
+.stats-grid span {
+    font-size: 0.95rem;
+}

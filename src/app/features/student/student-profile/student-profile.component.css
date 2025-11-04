@@ -1,0 +1,45 @@
+.edit-profile-page {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+/* --- Avatar et Upload --- */
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.upload-button {
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border-color: #ced4da;
+    color: #495057;
+    transition: background-color 0.2s;
+}
+
+.upload-button:hover {
+    background-color: #e2e6ea;
+}
+
+/* Améliore la taille des contrôles de formulaire pour correspondre au design */
+.form-control-lg, .form-select-lg {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+}
+
+/* Boutons d'action */
+.btn-primary {
+    background-color: #004b9b;
+    border-color: #004b9b;
+}
+
+.btn-info {
+    background-color: #17a2b8; /* Une couleur différente pour le changement de mot de passe */
+    border-color: #17a2b8;
+}

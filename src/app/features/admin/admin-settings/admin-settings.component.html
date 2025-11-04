@@ -1,0 +1,108 @@
+<div class="container py-4">
+    <h1 class="h3 fw-bold mb-1">Admin Profile Settings</h1>
+    <p class="text-muted mb-4">Manage your credentials, security, and notification preferences.</p>
+
+    <div class="row g-4">
+        
+        <div class="col-lg-6">
+            
+            <div class="card shadow-sm p-4 mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="h5 fw-bold mb-0">General Information</h2>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="toggleProfileEdit()">
+                        <i class="bi bi-{{ isProfileEditing ? 'x-lg' : 'pencil' }}"></i> {{ isProfileEditing ? 'Cancel' : 'Edit' }}
+                    </button>
+                </div>
+                
+                <form (ngSubmit)="saveProfile()">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" class="form-control" [disabled]="!isProfileEditing" [(ngModel)]="profile.name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" class="form-control bg-light" value="{{ profile.email }}" disabled>
+                        <div class="form-text">Contact Support to change your primary email.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="text" class="form-control" [disabled]="!isProfileEditing" [(ngModel)]="profile.phone" name="phone">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-2" *ngIf="isProfileEditing">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="card shadow-sm p-4">
+                <h2 class="h5 fw-bold mb-3">Change Password</h2>
+                
+                <form (ngSubmit)="changePassword()">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Current Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">New Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.newPassword" name="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Confirm New Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.confirmPassword" name="confirmPassword" required>
+                        <div class="form-text text-danger" *ngIf="passwordForm.newPassword && passwordForm.confirmPassword && passwordForm.newPassword !== passwordForm.confirmPassword">
+                            Passwords do not match.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning mt-2">Update Password</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            
+            <div class="card shadow-sm p-4 mb-4">
+                <h2 class="h5 fw-bold mb-3">Two-Factor Authentication (2FA)</h2>
+                
+                <div class="form-check form-switch d-flex justify-content-between align-items-center">
+                    <div>
+                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" 
+                               [(ngModel)]="twoFactorStatus" (change)="toggleTwoFactor()">
+                        <label class="form-check-label ms-2" for="flexSwitchCheckChecked">
+                            2FA Status: 
+                            <span class="fw-bold text-{{ twoFactorStatus ? 'success' : 'danger' }}">
+                                {{ twoFactorStatus ? 'Enabled' : 'Disabled' }}
+                            </span>
+                        </label>
+                    </div>
+                    <i class="bi bi-shield-lock h4 mb-0 text-{{ twoFactorStatus ? 'success' : 'muted' }}"></i>
+                </div>
+                <p class="text-muted small mt-2 mb-0">
+                    Strongly recommended. Requires a code from your mobile authenticator app (e.g., Google Authenticator) upon login.
+                </p>
+            </div>
+
+            <div class="card shadow-sm p-4">
+                <h2 class="h5 fw-bold mb-3">Notification Preferences</h2>
+                
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="validationAlerts" checked>
+                    <label class="form-check-label" for="validationAlerts">
+                        Email alerts for new Tutor Validations
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" id="suspiciousActivity" checked>
+                    <label class="form-check-label" for="suspiciousActivity">
+                        Email alerts for suspicious activity (e.g., failed logins)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="systemUpdates">
+                    <label class="form-check-label" for="systemUpdates">
+                        Receive system update notifications
+                    </label>
+                </div>
+                <button class="btn btn-sm btn-outline-primary mt-3">Save Notification Settings</button>
+            </div>
+        </div>
+    </div>
+</div>

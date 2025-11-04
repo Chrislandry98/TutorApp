@@ -1,0 +1,83 @@
+<div class="container-xl py-5">
+
+    <h1 class="fw-bold mb-4">Document Management</h1>
+    
+    <div class="card shadow-sm mb-5">
+        <div class="card-body p-4">
+            <h2 class="card-title fs-5 fw-bold mb-1">Upload New Documents</h2>
+            <p class="card-text text-muted mb-4">
+                Submit your required documents for validation. Ensure all files are clear and legible.
+            </p>
+
+            <div 
+                class="border border-2 border-dashed rounded p-5 text-center bg-light"
+                (click)="onUploadClick()"
+                style="cursor: pointer;"
+            >
+                <i class="bi bi-cloud-upload display-4 text-primary mb-3"></i>
+                <p class="mb-1">
+                    **Drag & drop files here or click to browse**
+                </p>
+                <small class="text-muted">
+                    PDF, DOCX, JPG, PNG up to {{ maxFileSizeMB }}MB
+                </small>
+            </div>
+            
+            <div class="d-flex justify-content-center mt-4">
+                <button 
+                    class="btn btn-primary px-5" 
+                    (click)="onUploadClick()"
+                >
+                    <i class="bi bi-upload me-2"></i>
+                    Upload Document
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <h2 class="fw-bold mb-3">Your Uploaded Documents</h2>
+    <p class="text-muted mb-4">
+        Track the validation status of all your submitted documents.
+    </p>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th scope="col">Document Name</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Upload Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let doc of uploadedDocuments">
+                            <td class="align-middle">{{ doc.name }}</td>
+                            <td class="align-middle text-muted">{{ doc.type }}</td>
+                            <td class="align-middle text-muted">{{ doc.date }}</td>
+                            
+                            <td class="align-middle">
+                                <span class="badge rounded-pill text-white" [ngClass]="getStatusClass(doc.status)">
+                                    {{ doc.status }}
+                                </span>
+                            </td>
+                            
+                            <td class="align-middle">
+                                <button class="btn btn-sm btn-link text-primary me-2" (click)="onView(doc)">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                                <button class="btn btn-sm btn-link text-danger" (click)="onDelete(doc)">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

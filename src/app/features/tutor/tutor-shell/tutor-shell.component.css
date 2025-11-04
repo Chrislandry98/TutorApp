@@ -1,0 +1,43 @@
+/* 1. Styles pour les liens de navigation actifs */
+.navbar-nav .nav-link.active {
+    /* Mise en évidence du lien actif en Blanc pour un bon contraste */
+    font-weight: bold;
+    color: #FFFFFF !important; 
+    border-bottom: 2px solid #FFFFFF; 
+}
+/* S'assurer que les liens normaux sont clairs */
+.navbar-nav .nav-link {
+    color: #DDDDDD; /* Gris clair */
+    padding-bottom: 0.5rem; 
+}
+
+/* =================================================== */
+/* 2. COULEUR DE FOND DU HEADER (NAVBAR) */
+/* =================================================== */
+
+/* FOND DE COULEUR SPÉCIFIQUE DEMANDÉE (#712CF9) - SANS VARIABLE */
+header.navbar {
+    background-color: #712CF9 !important; 
+    border-bottom: 3px solid #6225E0; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25) !important; 
+}
+
+/* S'assurer que les éléments du Header sont CLAIRS */
+.navbar-brand, 
+header.navbar .text-white-50, 
+header.navbar i {
+    color: #FFFFFF !important; 
+}
+
+/* =================================================== */
+/* 3. STYLE DU FOOTER MINIMALISTE */
+/* =================================================== */
+
+.tutor-layout footer {
+    /* Couleur de fond gris clair (ou blanc) pour contraster avec le Header sombre */
+    background-color: #212529 !important; /* bg-light de Bootstrap */
+    color: white; /* Gris foncé pour le texte */
+    padding: 1rem 0;
+    border-top: 1px solid #E9ECEF;
+    font-size: 0.85rem;
+}

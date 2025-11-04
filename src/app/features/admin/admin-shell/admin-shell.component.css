@@ -1,0 +1,55 @@
+/* Style Admin - Basé sur un Layout à deux colonnes */
+.admin-layout {
+    /* Le sticky footer doit être géré par la classe parent (ici, le shell lui-même) */
+    min-height: 100vh;
+}
+
+.sidebar {
+    min-width: 280px; /* Largeur confortable pour la Sidebar */
+    max-width: 280px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    /* Couleur d'accentuation forte pour l'Admin */
+    background-color: #0A1931 !important; /* Bleu très foncé / presque noir pour une sensation d'outil */
+}
+
+/* Style des liens dans la Sidebar */
+.sidebar .nav-link {
+    padding: 10px 15px;
+    border-radius: 4px;
+    opacity: 0.85;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+}
+
+/* Style du lien actif (très visible) */
+.sidebar .nav-link.active {
+    background-color: #712CF9 !important; /* Utiliser la couleur principale de l'app pour l'accent */
+    font-weight: bold;
+    opacity: 1;
+}
+
+/* Le contenu principal prend tout l'espace restant */
+.main-content {
+    overflow-y: auto;
+    width: 100%;
+}
+
+header {
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Style du Footer minimaliste */
+.admin-layout footer {
+    background-color: #F8F9FA !important; /* Gris clair */
+    color: #6C757D;
+    font-size: 0.8rem;
+    border-top: 1px solid #E9ECEF;
+}

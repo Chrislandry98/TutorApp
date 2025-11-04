@@ -1,0 +1,83 @@
+/* Utilisation de la variable SCSS de Bootstrap si possible, sinon en CSS pur */
+
+.main-container {
+    /* Dégradé de fond (selon l'image fournie) */
+    background: linear-gradient(
+        135deg, 
+        rgba(92, 45, 145, 1) 0%, /* Couleur violet foncé */
+        rgba(150, 50, 250, 1) 40%, /* Violet clair */
+        rgba(255, 100, 200, 1) 100% /* Magenta/Rose */
+    );
+    /* Pour s'assurer qu'il couvre toute la hauteur */
+     padding: 5em 0;
+}
+
+.row {
+    /* Assure que le contenu ne touche pas les bords sur mobile */
+    margin: auto;
+}
+
+/* Styles spécifiques aux boutons */
+.custom-btn-start {
+    /* Rendre le bouton principal plus visible ou ajuster sa couleur */
+    color: #5c2d91; /* Reprend la couleur du dégradé pour le texte */
+    font-weight: bold;
+}
+
+.custom-btn-explore {
+    /* Ajustement de la couleur pour le bouton secondaire */
+    /* Style normal, tel que défini précédemment */
+    border-color: rgba(255, 255, 255, 0.5); 
+    color: white; /* Texte blanc par défaut */
+    /* Assurez-vous d'ajouter une transition pour un effet plus doux */
+    transition: all 0.3s ease;
+}
+
+.custom-btn-explore:hover {
+    /* Règle pour l'état de survol */
+    color: black !important; /* Rend le texte noir au survol */
+    background-color: white !important; /* Remplir le bouton en blanc */
+    /* La bordure peut rester blanche ou devenir noire pour un look plus net */
+    border-color: white !important; 
+}
+
+.image-content {
+    /* Assure que l'image ne dépasse pas sur les petits écrans */
+    padding-top: 2rem;
+}
+
+/* Texte en bas (Statistiques) */
+.stats-bar .stat-item {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/*surbrillance tu bouton explore les tuteurs au click*/
+.explorebutton:hover{
+    color: black;
+}
+
+.custom-badge-glow {
+    /* Style de base : Fond Transparent, Texte Blanc */
+    background-color: transparent !important; /* Rend le fond transparent */
+    color: white !important; /* Rend le texte blanc */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Ajoute une bordure légère */
+    padding: 0.5em 0.8em; /* Ajuste le padding */
+    font-weight: normal;
+    
+    /* Animation pour un effet de survol doux */
+    transition: all 0.3s ease-in-out; 
+}
+
+.custom-badge-glow:hover {
+    /* Effet de surbrillance (Glow) au survol */
+    color: #ffd700 !important; /* Optionnel: Fait briller le texte en doré */
+    border-color: #ffd700; /* Fait briller la bordure */
+    
+    /* Création de l'effet de halo (Glow) */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), /* Ombre plus petite et vive */
+                0 0 20px rgba(255, 215, 0, 0.3); /* Ombre plus large et douce */
+    
+    /* Rendre le fond légèrement visible pour un meilleur effet */
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}

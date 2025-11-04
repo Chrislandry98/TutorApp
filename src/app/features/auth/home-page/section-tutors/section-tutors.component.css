@@ -1,0 +1,128 @@
+/* --- SECTION DES TUTEURS --- */
+
+.tuteurs-populaires {
+    background-color: #f8f9fa; /* Fond très léger pour contraster avec les cartes */
+}
+
+/* Style de la Carte Générale */
+.tuteur-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Conteneur de l'image (pour la position de l'étiquette/badge) */
+.image-container {
+    position: relative;
+    overflow: hidden;
+    /* Assurez-vous que l'image couvre le haut sans coins arrondis visibles */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.card-img-top {
+    /* Assure que l'image est recadrée si elle n'est pas la bonne taille */
+    height: 500px; 
+    object-fit: cover;
+}
+
+/* Étiquettes (Badges) */
+.tuteur-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.4em 0.8em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.meilleur-choix-badge {
+    /* Couleur spécifique pour Meilleur Choix */
+    background-color: #ffd700 !important; 
+    color: #333 !important;
+}
+
+/* Texte des Matières, Prix et Étoiles */
+.subject-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
+    margin-right: 10px;
+}
+
+.rating-text {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.price-text {
+    font-size: 1.2rem;
+    color: #007bff; /* Bleu vif pour le prix */
+}
+
+/* Bouton "Voir le profil" */
+.btn-voir-profil {
+    background-color: #004d80 !important; /* Bleu marine comme sur l'image */
+    border-color: #004d80 !important;
+    transition: background-color 0.2s;
+}
+
+.btn-voir-profil:hover {
+    background-color: #003366 !important;
+}
+
+/* --- BARRE DE STATISTIQUES (DÉGRADÉ) --- */
+
+.stats-bar {
+    /* Dégradé de fond personnalisé */
+    background: linear-gradient(
+        90deg, 
+        #5e35b1 0%, /* Violet foncé (gauche) */
+        #9c27b0 100% /* Magenta/Violet clair (droite) */
+    );
+    color: white;
+}
+
+.stat-item {
+    padding: 10px 0;
+    /* Ligne de séparation subtile pour les grands écrans */
+    position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.3); /* Ligne blanche transparente */
+}
+
+.stat-value {
+    /* Le poids et la taille sont gérés par les classes Bootstrap display-4 et fw-bold */
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Ajustement pour les petits écrans */
+@media (max-width: 767px) {
+    .stat-item {
+        /* Pas de ligne de séparation sur les petits écrans */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .stat-item:nth-child(2n)::after {
+        content: none;
+    }
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+    .stat-item:not(:last-child)::after {
+        content: none;
+    }
+}

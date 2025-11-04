@@ -1,0 +1,18 @@
+/* 1. Assurer que le HTML et le Body prennent toute la hauteur de la fenêtre */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Le Conteneur Principal (app-container) est le Flexbox Vertical */
+.app-container {
+    min-height: 100vh; /* Doit prendre au moins 100% de la hauteur de la vue */
+    display: flex;
+    flex-direction: column; /* Aligner les éléments verticalement */
+}
+
+/* 3. Forcer le Contenu Principal à prendre tout l'espace restant */
+.content-wrapper {
+    flex: 1; /* Ceci est la clé : il s'étire et pousse le Footer vers le bas */
+}

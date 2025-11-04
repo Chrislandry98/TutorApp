@@ -1,0 +1,101 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6 p-4 border rounded shadow-sm bg-white">
+
+      <h1 class="text-center">Create an Account</h1>
+      <p class="text-center text-secondary mb-4">Join TutorApp as a student or tutor</p>
+
+      <div class="d-flex mb-4 p-1 border rounded" style="background-color: #f8f9fa;">
+        <button 
+          type="button" 
+          class="btn flex-fill" 
+          [class.btn-dark]="userRole === 'student'" 
+          [class.btn-light]="userRole !== 'student'"
+          (click)="setUserRole('student')"
+        >
+          Student
+        </button>
+        <button 
+          type="button" 
+          class="btn flex-fill" 
+          [class.btn-dark]="userRole=== 'tutor'" 
+          [class.btn-light]="userRole !== 'tutor'"
+          (click)="setUserRole('tutor')"
+        >
+          Tutor
+        </button>
+      </div>
+
+      <form [formGroup]="userRole === 'student' ? studentForm : tutorForm" (ngSubmit)=" testRegisterSuccess()">
+        
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="John">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Doe">
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="you@example.com">
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="+1 (555) 000-0000">
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" formControlName="password">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword">
+          </div>
+        </div>
+        
+        <ng-container *ngIf="userRole === 'tutor'">
+          
+          <div class="mb-3">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea class="form-control" id="bio" formControlName="bio" rows="4" placeholder="Tell us about your teaching experience..."></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="hourlyRate" class="form-label">Hourly Rate ($)</label>
+            <input type="number" class="form-control" id="hourlyRate" formControlName="hourlyRate" placeholder="50">
+          </div>
+
+          <div class="mb-4">
+            <label for="subjects" class="form-label">Subjects (select your expertise)</label>
+            <select class="form-select" id="subjects" formControlName="subjects">
+              <option value="" disabled selected>Select subjects</option>
+              <option *ngFor="let subject of subjects" [value]="subject">{{ subject }}</option>
+            </select>
+          </div>
+
+        </ng-container>
+
+        <button 
+          type="submit" 
+          class="btn btn-dark btn-lg w-100" 
+          [disabled]="(userRole === 'student' ? studentForm : tutorForm).invalid"
+          style="background-color: rgb(79, 79, 247);"
+        >
+          Create Account
+        </button>
+      </form>
+      
+      <p class="text-center mt-3">
+        Already have an account? <a class="text-decoration-none" routerLink="/login" style="cursor: pointer">Sign in</a>
+      </p>
+
+    </div>
+  </div>
+</div>

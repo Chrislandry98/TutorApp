@@ -1,0 +1,111 @@
+/* --- Styles de la Section Globale --- */
+
+.subject-explorer {
+    padding: 80px 20px;
+    background-color: #f7f7f7; /* Couleur de fond légèrement grisée */
+    font-family: Arial, sans-serif;
+}
+
+.header-content {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+}
+
+/* --- Styles du Conteneur de Cartes (Grille) --- */
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux cartes d'aller à la ligne */
+    justify-content: center;
+    gap: 20px; /* Espace entre les cartes */
+    margin: 0 auto;
+}
+
+/* --- Styles de Chaque Carte --- */
+
+.subject-card {
+    /* Taille fixe pour les 6 cartes sur les grands écrans */
+    width: 600px; 
+    height: 180px;
+    
+    /* Style visuel de la carte */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    padding: 15px;
+    border: 1px solid #f0f0f0; 
+    border-radius: 12px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04); /* Ombre très subtile */
+    text-decoration: none; /* Enlève le soulignement du lien */
+    
+    /* Transition pour l'effet de survol */
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Effet de survol de base */
+.subject-card:hover {
+    transform: translateY(-3px); /* Légère élévation */
+    box-shadow: 0 8px 0 rgba(251, 2, 197, 0.08); 
+    border-color: #e0e0e0;
+}
+
+/* Icône */
+.subject-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+/* Titre de la carte */
+.card-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+/* Compteur de tuteurs */
+.card-count {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+/* --- Média Queries pour la Réactivité --- */
+
+@media (max-width: 992px) {
+    /* Deux cartes par ligne sur les tablettes */
+    .subject-card {
+        width: 45%; 
+        height: 180px;
+    }
+    .cards-container {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Une seule carte par ligne sur les mobiles */
+    .subject-card {
+        width: 80%; 
+        height: 160px;
+    }
+}

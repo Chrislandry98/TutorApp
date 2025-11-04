@@ -1,0 +1,91 @@
+<div class="my-sessions-page container py-5">
+  
+  <div class="header mb-5">
+    <h1 class="fw-bold display-5">My Sessions</h1>
+    <p class="text-muted">View and manage your tutoring sessions</p>
+  </div>
+  
+  <div class="nav nav-pills mb-4 session-filters">
+    <button 
+      class="btn btn-outline-secondary me-2" 
+      [class.active]="activeFilter === 'All Sessions'"
+      (click)="filterSessions('All Sessions')">
+      All Sessions
+    </button>
+    <button 
+      class="btn btn-outline-secondary me-2" 
+      [class.active]="activeFilter === 'Upcoming'"
+      (click)="filterSessions('Upcoming')">
+      Upcoming
+    </button>
+    <button 
+      class="btn btn-outline-secondary me-2" 
+      [class.active]="activeFilter === 'Completed'"
+      (click)="filterSessions('Completed')">
+      Completed
+    </button>
+    <button 
+      class="btn btn-outline-secondary" 
+      [class.active]="activeFilter === 'Cancelled'"
+      (click)="filterSessions('Cancelled')">
+      Cancelled
+    </button>
+  </div>
+
+  <div class="sessions-list">
+    <div class="card session-card mb-4 p-4 shadow-sm" *ngFor="let session of filteredSessions">
+      <div class="d-flex align-items-start">
+        
+        <div class="tutor-info me-4">
+          <img [src]="session.tutorPhotoUrl" alt="Tutor Photo" class="tutor-avatar rounded-circle mb-2">
+          <h6 class="fw-bold mb-0">{{ session.tutorName }}</h6>
+          <p class="small text-muted">{{ session.subject }}</p>
+          <p class="small text-muted fw-bold">{{ session.date }}</p>
+        </div>
+        
+        <div class="session-details flex-grow-1">
+          <div class="details-row d-flex justify-content-between align-items-start flex-wrap mb-3">
+            
+            <div class="d-flex gap-4">
+              <span class="detail-item text-muted">
+                <i class="bi bi-clock me-1"></i> {{ session.duration }} minutes
+              </span>
+              <span class="detail-item text-muted">
+                Payment: <span [class]="getPaymentColor(session.paymentStatus)">{{ session.paymentStatus }}</span>
+              </span>
+            </div>
+
+            <div class="d-flex gap-4">
+              <span class="fw-bold">Cost: {{ session.cost | currency:'USD':'symbol':'1.2-2' }}</span>
+              <span class="badge status-badge" 
+                    [ngClass]="{
+                      'bg-primary': session.status === 'confirmed' || session.status === 'upcoming',
+                      'bg-success': session.status === 'completed',
+                      'bg-danger': session.status === 'cancelled'
+                    }">
+                {{ session.status }}
+              </span>
+            </div>
+          </div>
+          
+          <div class="actions">
+            <ng-container *ngIf="session.status === 'confirmed' || session.status === 'upcoming'">
+              <button class="btn btn-outline-primary btn-sm me-2" (click)="reschedule(session.id)">Reschedule</button>
+              <button class="btn btn-outline-danger btn-sm me-2" (click)="cancel(session.id)">Cancel</button>
+            </ng-container>
+
+            <ng-container *ngIf="session.status === 'completed'">
+              <button class="btn btn-primary btn-sm me-2" (click)="leaveReview(session.id)">Leave Review</button>
+            </ng-container>
+
+            <button class="btn btn-outline-secondary btn-sm" (click)="viewTutor(session.id)">View Tutor</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div *ngIf="filteredSessions.length === 0" class="alert alert-info text-center mt-5" role="alert">
+      No sessions found for the current filter: {{ activeFilter }}.
+    </div>
+  </div>
+</div>

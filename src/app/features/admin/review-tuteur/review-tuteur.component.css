@@ -1,0 +1,22 @@
+.validation-table th {
+    /* Ajuster l'espacement de l'en-tête */
+    padding-bottom: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+}
+
+.validation-table td {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.validation-table .badge {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+/* Assurer la lisibilité du badge jaune */
+.bg-warning.text-dark {
+    color: #212529 !important;
+}

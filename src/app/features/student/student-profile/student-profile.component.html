@@ -1,0 +1,85 @@
+<div class="container py-4">
+    
+    <h1 class="h3 fw-bold mb-1">Student Profile Settings</h1>
+    <p class="text-muted mb-4">Manage your personal information and school level.</p>
+
+    <div class="row g-4">
+        
+        <div class="col-lg-6">
+            
+            <div class="card shadow-sm p-4 h-100">
+                <h2 class="h5 fw-bold mb-3">Personal Information & Level</h2>
+                
+                <form #profileForm="ngForm" (ngSubmit)="saveProfile()">
+                    
+                    <div class="d-flex align-items-center mb-4">
+                        <img [src]="studentProfile.profilePictureUrl" 
+                             alt="Profile Picture" 
+                             class="rounded-circle me-4" 
+                             style="width: 80px; height: 80px; object-fit: cover;">
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary" (click)="updateProfilePicture()">
+                                <i class="bi bi-upload me-1"></i> Update Picture
+                            </button>
+                            <p class="text-muted small mt-1 mb-0">Max size 2MB, formats: JPG, PNG.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Full Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="studentProfile.fullName" name="fullName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" class="form-control" value="{{ studentProfile.email }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Phone Number</label>
+                        <input type="text" class="form-control" [(ngModel)]="studentProfile.phone" name="phone">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Current School Level</label>
+                        <select class="form-select" [(ngModel)]="studentProfile.schoolLevel" name="schoolLevel" required>
+                            <option *ngFor="let level of availableLevels" [value]="level">{{ level }}</option>
+                        </select>
+                        <div class="form-text">This helps tutors understand your learning context.</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mt-3" [disabled]="!profileForm.valid">Save Profile</button>
+                </form>
+            </div>
+            
+        </div>
+        
+        <div class="col-lg-6">
+            
+            <div class="card shadow-sm p-4">
+                <h2 class="h5 fw-bold mb-3">Change Password</h2>
+                
+                <form (ngSubmit)="changePassword()">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Current Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">New Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.newPassword" name="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Confirm New Password</label>
+                        <input type="password" class="form-control" [(ngModel)]="passwordForm.confirmPassword" name="confirmPassword" required>
+                        <div class="form-text text-danger" *ngIf="passwordForm.newPassword && passwordForm.confirmPassword && passwordForm.newPassword !== passwordForm.confirmPassword">
+                            Passwords do not match.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning mt-2">Update Password</button>
+                </form>
+            </div>
+            
+            <div class="mt-4 p-3 border rounded text-center text-muted small">
+                Your profile information is only visible to your assigned tutors.
+            </div>
+        </div>
+    </div>
+</div>

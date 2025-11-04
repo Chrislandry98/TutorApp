@@ -1,0 +1,134 @@
+<div class="container-fluid py-4">
+    <h1 class="h3 fw-bold mb-1">Admin Dashboard</h1>
+    <p class="text-muted mb-4">Platform overview and management</p>
+
+    <div class="row mb-4">
+        <div class="col-sm-6 col-lg-3 mb-3" *ngFor="let stat of statsData">
+            <div class="card shadow-sm p-3 admin-stats-card">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <p class="text-muted small mb-1">{{ stat.title }}</p>
+                        <h2 class="h4 mb-0 fw-bold d-flex align-items-center">
+                            <i *ngIf="stat.title === 'Total Revenue'" class="bi bi-currency-dollar small me-1"></i>
+                            {{ stat.value }}
+                        </h2>
+                        <p class="small text-muted mb-0">{{ stat.subtitle }}</p>
+                    </div>
+                    <i class="bi {{ stat.icon }} h5 {{ stat.color }}"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center bg-white border-0 py-3">
+                    <h5 class="mb-0">Pending Tutor Validations</h5>
+                    <button class="btn btn-sm btn-outline-secondary">View All</button>
+                </div>
+                <div class="card-body pt-0">
+                    <div *ngIf="pendingValidations.length === 0" class="text-center text-muted py-3">
+                        No pending tutor validations.
+                    </div>
+                    <div *ngFor="let tutor of pendingValidations" 
+                         class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-light me-3 p-2" style="width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-person h6 mb-0 text-muted"></i>
+                            </div>
+                            <div>
+                                <p class="mb-0 fw-bold">{{ tutor.name }}
+                                    <i *ngIf="tutor.hasWarning" class="bi bi-exclamation-triangle-fill text-warning ms-1 small"></i>
+                                </p>
+                                <span class="text-muted small">{{ tutor.email }}</span>
+                                <span class="text-muted small d-block">Applied {{ tutor.appliedDate }}</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-primary" (click)="reviewTutor(tutor.id)">Review</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center bg-white border-0 py-3">
+                    <h5 class="mb-0">Recent Transactions</h5>
+                    <button class="btn btn-sm btn-outline-secondary">View All</button>
+                </div>
+                <div class="card-body pt-0">
+                    <div *ngFor="let transaction of recentTransactions" 
+                         class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                        <div class="d-flex align-items-center">
+                            <i class="bi h5 me-3 mb-0"
+                               [class.bi-file-earmark-diff]="transaction.type === 'recharge'"
+                               [class.bi-currency-dollar]="transaction.type === 'payment'"
+                               [class.text-success]="transaction.type === 'recharge'"
+                               [class.text-primary]="transaction.type === 'payment'"></i>
+                            <div>
+                                <p class="mb-0 fw-bold">{{ transaction.description }}</p>
+                                <span class="text-muted small">{{ transaction.date }}</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <p class="mb-0 small fw-bold"
+                               [class.text-success]="transaction.type === 'recharge'"
+                               [class.text-dark]="transaction.type === 'payment'">
+                                {{ formatCurrency(transaction.amount) }}
+                            </p>
+                            <span class="badge bg-success">completed</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body d-grid gap-2">
+                    <button class="btn btn-primary btn-lg" (click)="reviewAllTutor()">Review Tutors</button>
+                    <button class="btn btn-outline-secondary" (click)="auditTransactions()">View Transactions</button>
+                    <button class="btn btn-outline-secondary"  (click)="manageUsers()">Manage Users</button>
+                    <button class="btn btn-outline-secondary" (click)="manageSubjects()">Manage Subjects/levels</button>
+                    <button class="btn btn-outline-secondary" (click)="manageSettings()">Settings</button>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0">Platform Stats</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total Tutors</span>
+                        <span class="fw-bold">{{ platformStats.totalTutors }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Active Students</span>
+                        <span class="fw-bold">{{ platformStats.activeStudents }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total Subjects</span>
+                        <span class="fw-bold">{{ platformStats.totalSubjects }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Total Levels</span>
+                        <span class="fw-bold">{{ platformStats.totalLevels }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Avg Session Rate</span>
+                        <span class="fw-bold">{{ formatCurrency(platformStats.avgSessionRate) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-0">
+                        <span>Platform Rating</span>
+                        <span class="fw-bold">{{ platformStats.platformRating }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
