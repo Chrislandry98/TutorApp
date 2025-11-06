@@ -1,0 +1,114 @@
+<div class="container py-4">
+    <div class="card shadow-lg border-0">
+        <div class="card-header text-white fw-bold p-3" [style.background-color]="'#712CF9'">
+            <i class="bi bi-clock-history me-2"></i> 
+            Détails de la Session : {{ session.topic }}
+        </div>
+        <div class="card-body p-4">
+
+            <div class="alert text-center p-3 mb-4" 
+                [class.alert-warning]="session.status === 'Upcoming'"
+                [class.alert-success]="session.status === 'Completed'"
+                [class.alert-danger]="session.status === 'Cancelled'">
+                
+                <p class="h5 fw-bold mb-2">Statut : {{ session.status === 'Upcoming' ? 'À Venir' : (session.status === 'Completed' ? 'Complétée' : 'Annulée') }}</p>
+
+                <div *ngIf="session?.status === 'Upcoming'">
+                    <p class="mb-3 fw-semibold text-primary" [style.color]="'#712CF9 !important'">{{ timeUntilStart }}</p>
+                    
+                    <button class="btn btn-lg w-75"
+                            [class.btn-success]="isLaunchEnabled"
+                            [class.btn-secondary]="!isLaunchEnabled"
+                            (click)="launchMeeting()"
+                            [disabled]="!isLaunchEnabled || !session.zoomLink">
+                        <i class="bi bi-camera-video-fill me-2"></i> 
+                        Lancer la Réunion (Zoom)
+                    </button>
+                    <p class="small text-muted mt-2">Le lien s'active 15 minutes avant l'heure de début.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-info-circle-fill me-2 text-secondary"></i> Informations de Base</h5>
+                    <ul class="list-group list-group-flush small">
+                        
+                        <ng-container *ngIf="session?.status !== 'Cancelled'">
+                            <li class="list-group-item">Heure et Date : {{ session.dateTime | date: 'fullDate' }} à {{ session.dateTime | date: 'shortTime' }}</li>
+                            <li class="list-group-item">Durée :{{ session.duration }} minutes</li>
+                        </ng-container>
+
+                        <li *ngIf="session?.status === 'Cancelled'" class="list-group-item text-danger fw-semibold">
+                            Cette session est annulée.
+                        </li>
+
+                        <li *ngIf="userRole === 'tutor'" class="list-group-item">Étudiant :{{ session.studentName }}</li>
+                        <li *ngIf="userRole === 'student'" class="list-group-item">Tuteur :{{ session.tutorName }}</li>
+                        
+                        <li *ngIf="userRole === 'tutor'" class="list-group-item">Taux Horaire :{{ session.hourlyRate | currency:'CAD' }}</li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-6">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-folder-fill me-2 text-secondary"></i> Fichiers & Documents</h5>
+                    
+                    <div *ngIf="hasFiles(); else noFiles">
+                        <ul class="list-group small">
+                            <li *ngFor="let file of session.files" class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="bi bi-file-earmark me-2"></i> {{ file.name }}</span>
+                                <a [href]="file.url" target="_blank" class="btn btn-sm btn-outline-primary">Télécharger</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <ng-template #noFiles>
+                        <div class="alert alert-light small">Aucun document partagé pour cette session.</div>
+                    </ng-template>
+                </div>
+            </div>
+            
+            <div *ngIf="session?.status === 'Completed' && showFeedbackForm" class="mt-5 p-4 border rounded" [style.background-color]="'#f8f9fa'">
+                <h4 class="fw-bold mb-3" [style.color]="'#712CF9'">
+                    <i class="bi bi-pencil-square me-2"></i> 
+                    {{ userRole === 'tutor' ? 'Rapport de Session' : 'Notation et Avis' }}
+                </h4>
+                
+                <div *ngIf="userRole === 'student'">
+                    <label class="form-label fw-semibold">Notez votre session (1 à 5 étoiles) :</label>
+                    <div class="mb-3 d-flex align-items-center">
+                        <i *ngFor="let i of [1,2,3,4,5]" 
+                           class="bi h4 me-1" 
+                           [class.bi-star-fill]="i <= sessionRating" 
+                           [class.bi-star]="i > sessionRating" 
+                           (click)="sessionRating = i"
+                           style="color: gold; cursor: pointer;"></i>
+                        <span class="ms-2 small text-muted">({{ sessionRating }} / 5)</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label [for]="userRole + 'Report'" class="form-label fw-semibold">
+                        {{ userRole === 'tutor' ? 'Rapport détaillé' : 'Commentaires (Optionnel)' }} :
+                    </label>
+                    <textarea [id]="userRole + 'Report'" 
+                              class="form-control" 
+                              rows="3" 
+                              [(ngModel)]="sessionReport" 
+                              required>
+                    </textarea>
+                </div>
+
+                <button class="btn btn-primary mt-3" (click)="submitFeedback()" [disabled]="userRole === 'student' && sessionRating === 0">
+                    Soumettre {{ userRole === 'tutor' ? 'le Rapport' : 'l\'Avis' }}
+                </button>
+            </div>
+            
+            <div *ngIf="session?.rating && userRole === 'student'" class="mt-5 alert alert-info">
+                <i class="bi bi-check-circle me-2"></i> Vous avez déjà noté cette session ({{ session.rating }}/5).
+            </div>
+            <div *ngIf="session?.report && userRole === 'tutor'" class="mt-5 alert alert-info">
+                <i class="bi bi-check-circle me-2"></i> Le rapport de cette session a été soumis.
+            </div>
+
+        </div>
+    </div>
+</div>

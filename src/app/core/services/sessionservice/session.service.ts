@@ -109,60 +109,25 @@ export class SessionService{
     getSessionTest(): Session[]{
       return [
         {
-          id: 1, tutorName: 'Sarah Johnson', subject: 'Calculus', date: 'Mar 14, 2024',
+          id: 1, studentName: 'Landry', tutorName: 'Sarah Johnson', subject: 'Calculus', date: 'Mar 14, 2024',
           duration: 60, cost: 45.00, paymentStatus: 'paid', status: 'confirmed', 
           tutorPhotoUrl: 'images-Homepage/tuteurs/tuteur1.png' // Image du tuteur
         },
         {
-          id: 2, tutorName: 'John Martinez', subject: 'Physics', date: 'Mar 9, 2024',
+          id: 2, studentName: 'Landry', tutorName: 'John Martinez', subject: 'Physics', date: 'Mar 9, 2024',
           duration: 90, cost: 75.00, paymentStatus: 'paid', status: 'completed',
           tutorPhotoUrl: 'images-Homepage/tuteurs/tuteur2.png'
         },
         {
-          id: 3, tutorName: 'Emma Chen', subject: 'English Literature', date: 'Mar 25, 2024',
+          id: 3, studentName: 'Landry',  tutorName: 'Emma Chen', subject: 'English Literature', date: 'Mar 25, 2024',
           duration: 45, cost: 30.00, paymentStatus: 'pending', status: 'upcoming',
           tutorPhotoUrl: 'images-Homepage/tuteurs/tuteur3.png'
         },
         {
-          id: 4, tutorName: 'Michael Brown', subject: 'Programming', date: 'Mar 5, 2024',
+          id: 4, studentName: 'Landry',  tutorName: 'Michael Brown', subject: 'Programming', date: 'Mer 11, 2025',
           duration: 60, cost: 55.00, paymentStatus: 'paid', status: 'cancelled',
           tutorPhotoUrl: 'assets/tutors/michael_brown.jpg'
         }
       ];
-    }
-
-    getAllTransactions():StudentTransaction[]{
-      return [
-        {
-          id_transaction: 1,
-          id_compte_fk: 1,
-          id_session_fk: undefined, // Non lié à une session
-          id_recharge_fk: 10,        // Clé étrangère vers la première Recharge
-          type: 'Recharge',  // Recharge = Crédit
-          amount: 100,
-          date: new Date('2024-02-29T10:00:00Z'),
-          description: 'Achat de points via Recharge (Pack Standard)'
-        },
-        {
-          id_transaction: 2,
-          id_compte_fk: 2,
-          id_session_fk: 55,         // Clé étrangère vers la Session payée
-          id_recharge_fk: undefined, // Non lié à une recharge
-          type: 'Payment',   // Paiement = Débit
-          amount: 45,               // Note: Le montant est toujours positif dans l'objet, le signe est donné par 'type_mouvement'
-          date: new Date('2024-03-14T15:30:00Z'),
-          description: 'Paiement pour la session de Mathématiques (ID: 55)'
-        },
-        {
-          id_transaction: 3,
-          id_compte_fk: 3,
-          id_session_fk: undefined,
-          id_recharge_fk: 11,        // Clé étrangère vers la deuxième Recharge
-          type: 'Payment',
-          amount: 200,
-          date: new Date('2024-03-19T09:00:00Z'),
-          description: 'Achat de points via Recharge (Pack Premium)'
-        }
-      ]
     }
 }

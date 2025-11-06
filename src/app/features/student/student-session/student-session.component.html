@@ -1,91 +1,82 @@
-<div class="my-sessions-page container py-5">
-  
-  <div class="header mb-5">
-    <h1 class="fw-bold display-5">My Sessions</h1>
-    <p class="text-muted">View and manage your tutoring sessions</p>
-  </div>
-  
-  <div class="nav nav-pills mb-4 session-filters">
-    <button 
-      class="btn btn-outline-secondary me-2" 
-      [class.active]="activeFilter === 'All Sessions'"
-      (click)="filterSessions('All Sessions')">
-      All Sessions
-    </button>
-    <button 
-      class="btn btn-outline-secondary me-2" 
-      [class.active]="activeFilter === 'Upcoming'"
-      (click)="filterSessions('Upcoming')">
-      Upcoming
-    </button>
-    <button 
-      class="btn btn-outline-secondary me-2" 
-      [class.active]="activeFilter === 'Completed'"
-      (click)="filterSessions('Completed')">
-      Completed
-    </button>
-    <button 
-      class="btn btn-outline-secondary" 
-      [class.active]="activeFilter === 'Cancelled'"
-      (click)="filterSessions('Cancelled')">
-      Cancelled
-    </button>
-  </div>
+<div class="container py-5">
+    <h1 class="mb-4 fw-bold" style="color: #712CF9;">Mes Sessions de Tutorat</h1>
 
-  <div class="sessions-list">
-    <div class="card session-card mb-4 p-4 shadow-sm" *ngFor="let session of filteredSessions">
-      <div class="d-flex align-items-start">
-        
-        <div class="tutor-info me-4">
-          <img [src]="session.tutorPhotoUrl" alt="Tutor Photo" class="tutor-avatar rounded-circle mb-2">
-          <h6 class="fw-bold mb-0">{{ session.tutorName }}</h6>
-          <p class="small text-muted">{{ session.subject }}</p>
-          <p class="small text-muted fw-bold">{{ session.date }}</p>
-        </div>
-        
-        <div class="session-details flex-grow-1">
-          <div class="details-row d-flex justify-content-between align-items-start flex-wrap mb-3">
-            
-            <div class="d-flex gap-4">
-              <span class="detail-item text-muted">
-                <i class="bi bi-clock me-1"></i> {{ session.duration }} minutes
-              </span>
-              <span class="detail-item text-muted">
-                Payment: <span [class]="getPaymentColor(session.paymentStatus)">{{ session.paymentStatus }}</span>
-              </span>
-            </div>
-
-            <div class="d-flex gap-4">
-              <span class="fw-bold">Cost: {{ session.cost | currency:'USD':'symbol':'1.2-2' }}</span>
-              <span class="badge status-badge" 
-                    [ngClass]="{
-                      'bg-primary': session.status === 'confirmed' || session.status === 'upcoming',
-                      'bg-success': session.status === 'completed',
-                      'bg-danger': session.status === 'cancelled'
-                    }">
-                {{ session.status }}
-              </span>
-            </div>
-          </div>
-          
-          <div class="actions">
-            <ng-container *ngIf="session.status === 'confirmed' || session.status === 'upcoming'">
-              <button class="btn btn-outline-primary btn-sm me-2" (click)="reschedule(session.id)">Reschedule</button>
-              <button class="btn btn-outline-danger btn-sm me-2" (click)="cancel(session.id)">Cancel</button>
-            </ng-container>
-
-            <ng-container *ngIf="session.status === 'completed'">
-              <button class="btn btn-primary btn-sm me-2" (click)="leaveReview(session.id)">Leave Review</button>
-            </ng-container>
-
-            <button class="btn btn-outline-secondary btn-sm" (click)="viewTutor(session.id)">View Tutor</button>
-          </div>
-        </div>
-      </div>
+    <!-- Barres de Filtres -->
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        <button 
+            *ngFor="let filter of ['All Sessions', 'Upcoming', 'Completed', 'Cancelled']"
+            (click)="filterSessions(filter)"
+            class="btn btn-sm text-white rounded-pill shadow-sm"
+            [class.btn-primary]="activeFilter === filter"
+            [class.btn-outline-secondary]="activeFilter !== filter">
+            {{ filter }}
+        </button>
     </div>
-    
-    <div *ngIf="filteredSessions.length === 0" class="alert alert-info text-center mt-5" role="alert">
-      No sessions found for the current filter: {{ activeFilter }}.
+
+    <!-- Affichage des Sessions -->
+    <div *ngIf="filteredSessions.length > 0; else noSessions" class="row g-4">
+        <div *ngFor="let session of filteredSessions" class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge text-uppercase {{ getStatusBadgeClass(session.status) }}">
+                            {{ session.status }}
+                        </span>
+                        <img [src]="session.tutorPhotoUrl" alt="Tutor Photo" class="rounded-circle" style="width: 50px; height: 50px; object-fit: cover;">
+                    </div>
+                    
+                    <h5 class="card-title fw-bold" style="color: #712CF9;">
+                        {{ session.topic }}
+                    </h5>
+                    
+                    <ul class="list-unstyled small mt-3">
+                        <li><i class="bi bi-person-fill me-2 text-primary"></i> Tuteur : {{ session.tutorName }}</li>
+                        <!-- Utilisation des Pipes Date et Currency -->
+                        <li><i class="bi bi-calendar me-2 text-secondary"></i> Date : {{ session.date | date: 'fullDate' }}</li>
+                        <li><i class="bi bi-currency-dollar me-2" [class]="getPaymentColor(session.paymentStatus)"></i> Paiement : {{ session.paymentStatus | uppercase }}</li>
+                    </ul>
+
+                    <hr>
+                    
+                    <div class="d-grid gap-2">
+                        <button (click)="openSessionDetails(session.id)" class="btn btn-sm btn-outline-primary fw-semibold">
+                            <i class="bi bi-eye me-2"></i> Voir les Détails
+                        </button>
+                        
+                        <ng-container [ngSwitch]="session.status">
+                            <button *ngSwitchCase="'completed'" (click)="leaveReview(session.id)" class="btn btn-sm btn-success-outline">
+                                Laisser un Avis
+                            </button>
+                        </ng-container>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- Message si aucune session -->
+    <ng-template #noSessions>
+        <div class="alert alert-info text-center shadow-sm p-5 mt-5">
+            <p class="mb-0">Aucune session trouvée pour le filtre "{{ activeFilter }}".</p>
+        </div>
+    </ng-template>
+</div>
+
+<!-- 🔑 MODALE DE DÉTAILS : Utilisation de NgIf pour l'affichage conditionnel -->
+<div *ngIf="selectedSession" class="session-detail-overlay" (click)="closeSessionDetails()">
+    <div class="session-detail-modal-content" (click)="$event.stopPropagation()">
+        
+        <app-session-details
+            [session]="selectedSession"
+            [userRole]="'student'"> 
+        </app-session-details>
+
+        <!-- Bouton pour fermer la modale -->
+        <button class="btn-close close-button" 
+                aria-label="Close" 
+                (click)="closeSessionDetails()">
+        </button>
+        
+    </div>
 </div>

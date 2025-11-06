@@ -33,6 +33,10 @@ export const routes: Routes = [
         path: 'messages',
         loadComponent: () => import('./shared/components/messagerie/messagerie.component').then(m => m.MessagerieComponent),
     },
+     { 
+        path: 'session',
+        loadComponent: () => import('./shared/components/session-details/session-details.component').then(m => m.SessionDetailsComponent),
+    },
 
 
     // ----------------------------------------------------------------------

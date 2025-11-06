@@ -1,25 +1,28 @@
 <div class="container py-4">
     <h1 class="h3 fw-bold mb-4">Sessions & Étudiants</h1>
 
+    <!-- Onglets de Navigation (Adapté en Tailwind/Classes) -->
     <ul class="nav nav-tabs mb-4">
       <li class="nav-item">
         <button class="nav-link" 
-                [class.active]="activeTab === 'sessions'" 
-                (click)="setActiveTab('sessions')">
+              [class.active]="activeTab === 'sessions'" 
+              (click)="setActiveTab('sessions')">
           <i class="bi bi-calendar-check me-2"></i> Historique des Sessions
         </button>
       </li>
       <li class="nav-item">
         <button class="nav-link" 
-                [class.active]="activeTab === 'students'" 
-                (click)="setActiveTab('students')">
+              [class.active]="activeTab === 'students'" 
+              (click)="setActiveTab('students')">
           <i class="bi bi-people me-2"></i> Mes Étudiants Actifs
         </button>
       </li>
     </ul>
 
+    <!-- 🔑 Contenu des Sessions -->
     <div *ngIf="activeTab === 'sessions'">
         
+        <!-- Sessions à Venir -->
         <h2 class="h5 mb-3">Sessions à venir ({{ upcomingSessions.length }})</h2>
         <div *ngIf="upcomingSessions.length === 0" class="alert alert-info">
             Aucune session prévue pour le moment.
@@ -34,9 +37,9 @@
                         Date: {{ session.date | date: 'dd MMMM à HH:mm' }} | Durée: {{ session.duration }} min
                     </p>
                 </div>
-                <div>
-                    <button class="btn btn-sm btn-primary me-2" (click)="startSession(session.sessionId)">
-                        <i class="bi bi-play-circle me-1"></i> Démarrer
+                <div class="d-flex align-items-center gap-2">
+                    <button class="btn btn-sm btn-primary" (click)="openSessionDetails(session.sessionId)">
+                        <i class="bi bi-eye me-1"></i> Détails
                     </button>
                     <button class="btn btn-sm btn-outline-danger" (click)="cancelSession(session.sessionId)">
                         <i class="bi bi-x-circle me-1"></i> Annuler
@@ -45,6 +48,7 @@
             </div>
         </div>
 
+        <!-- Sessions Complétées -->
         <h2 class="h5 mb-3">Sessions Complétées ({{ completedSessions.length }})</h2>
         <table class="table table-striped table-hover">
             <thead>
@@ -53,6 +57,7 @@
                     <th>Sujet</th>
                     <th>Date</th>
                     <th>Durée</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,10 +66,16 @@
                     <td>{{ session.topic }}</td>
                     <td>{{ session.date | date: 'dd/MM/yyyy' }}</td>
                     <td>{{ session.duration }} min</td>
+                    <td>
+                         <button class="btn btn-sm btn-outline-secondary" (click)="openSessionDetails(session.sessionId)">
+                            <i class="bi bi-eye me-1"></i> Voir Rapport
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
         
+        <!-- Sessions Annulées -->
         <h2 class="h5 mb-3 mt-5 text-danger">Sessions Annulées ({{ cancelledSessions.length }})</h2>
         <table class="table table-sm table-light">
             <thead>
@@ -73,6 +84,7 @@
                     <th>Sujet</th>
                     <th>Date</th>
                     <th>Statut</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -81,17 +93,23 @@
                     <td>{{ session.topic }}</td>
                     <td>{{ session.date | date: 'dd/MM/yyyy' }}</td>
                     <td><span class="badge bg-danger">Annulé</span></td>
+                    <td>
+                         <button class="btn btn-sm btn-outline-secondary" (click)="openSessionDetails(session.sessionId)">
+                            <i class="bi bi-eye me-1"></i> Détails
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
     </div>
 
+    <!-- Contenu des Étudiants (inchangé) -->
     <div *ngIf="activeTab === 'students'">
         <h2 class="h5 mb-3">Liste des Étudiants ({{ students.length }})</h2>
         <div class="row g-4">
             <div class="col-md-6 col-lg-4" *ngFor="let student of students">
-                <div class="card shadow-sm h-100 border-start border-3" [style.border-color]="'#712CF9 !important'">
+                <div class="card shadow-sm h-100 border-start border-3" style="border-color: #0d6efd !important;">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">{{ student.name }}</h5>
                         <p class="card-text mb-1 small text-muted">Niveau: {{ student.level }}</p>
@@ -105,4 +123,24 @@
         </div>
     </div>
 
+</div>
+
+<!-- 🔑 MODALE DE DÉTAILS INTÉGRÉE -->
+<!-- Affiché uniquement si selectedSession n'est PAS null -->
+<div *ngIf="selectedSession" class="session-detail-overlay" (click)="closeSessionDetails()">
+    <div class="session-detail-modal-content" (click)="$event.stopPropagation()">
+        
+        <!-- FIX: Utilisation de l'opérateur d'assertion non-null (!) pour satisfaire le compilateur -->
+        <app-session-details
+            [session]="selectedSession!"
+            [userRole]="'tutor'"> <!-- Spécifie le rôle pour afficher les bonnes actions/infos -->
+        </app-session-details>
+
+        <!-- Bouton pour fermer la modale -->
+        <button class="btn-close close-button" 
+                aria-label="Close" 
+                (click)="closeSessionDetails()">
+        </button>
+        
+    </div>
 </div>
