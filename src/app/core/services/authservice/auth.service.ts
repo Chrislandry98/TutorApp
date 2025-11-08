@@ -55,6 +55,28 @@ export class AuthService {
   );
 
 
+  //Méthode pour récuperer le role de facon synchrone
+  public getUserRole(): 'ETUDIANT' | 'TUTEUR' | 'ADMIN' | null {
+    const user = this.currentUserSubject.value;
+    console.log(user?.roles);
+    if (!user || !user.roles || user.roles.length === 0) {
+       return null;
+    }
+    // Logique pour identifier le rôle principal ou vérifier l'existence
+    if (user.roles.includes('ADMIN')) return 'ADMIN';
+    if (user.roles.includes('TUTEUR')) return 'TUTEUR';
+    if (user.roles.includes('ETUDIANT')) return 'ETUDIANT';
+    return null;
+  }
+
+
+
+  //Méthode pour récuperer id utilisateur de facon synchrone
+  public getCurrentUserId(): number | null {
+    return this.currentUserSubject.value?.id || null;
+  }
+
+
   // Stockage de l'Access Token en mémoire (pour les appels API)
   private accessToken: string | null = null;
   private tokenExpirationTimer: any;
@@ -94,12 +116,41 @@ export class AuthService {
   login(credentials: Credentials): Observable<AuthResponse> {
     // Étape 1.1: Validation des Credentials (ici, l'appel HTTP)
     // Le Backend gère les étapes 1.2 (génération) et 1.3 (stockage du Refresh Token en cookie)
-    console.log(credentials);
+    console.log("Tentative de connexion", credentials);
     return this.http.post<AuthResponse>(`${API_AUTH_URL}/login`, credentials)
       .pipe(
+        // 1. Mise à jour de l'état (Doit se faire en premier pour mettre à jour le rôle)
         tap(response => this.setAuthState(response)),
+
+        // 2. 🎯 NOUVEAU TAP : Exécuter la redirection après la mise à jour de l'état
+        tap(() => this.redirectToAppropriateShell()),
+
+        // 3. Gestion des erreurs (Doit être la dernière opération)
         catchError(this.handleError)
       );
+  }
+
+  //Logique de redirection centralisée.utilise le Router injecté pour naviguer en fonction du rôle mis à jour.
+  private redirectToAppropriateShell(): void {
+    const role = this.getUserRole(); // Lit le rôle fraîchement mis à jour
+
+    switch (role) {
+      case 'ETUDIANT':
+        this.router.navigate(['/student/dashboard']);
+        break;
+      case 'TUTEUR':
+        this.router.navigate(['/tutor/dashboard']);
+        break;
+      case 'ADMIN':
+        console.log("Redirection vers le shell Administrateur.");
+        this.router.navigate(['/admin/dashboard']); 
+        break;
+      default:
+      // Fallback sécurisé : redirige vers une page d'accueil ou de déconnexion
+      console.warn("Rôle utilisateur non reconnu ou manquant. Redirection par défaut.");
+      this.router.navigate(['/']); 
+      break;
+    }
   }
 
 

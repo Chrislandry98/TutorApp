@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
+import { roleGuard } from './core/guards/role.guard';
+import { userGuard } from './core/guards/user.guard';
 
 
 export const routes: Routes = [
@@ -29,14 +32,6 @@ export const routes: Routes = [
         path: 'view-profile'/*/:id*/, // Utilisez une route paramétrée pour un profil public
         loadComponent: () => import('./features/tutor/tutor-profile/tutor-profile.component').then(m => m.TutorProfileComponent),
     },
-    { 
-        path: 'messages',
-        loadComponent: () => import('./shared/components/messagerie/messagerie.component').then(m => m.MessagerieComponent),
-    },
-     { 
-        path: 'session',
-        loadComponent: () => import('./shared/components/session-details/session-details.component').then(m => m.SessionDetailsComponent),
-    },
 
 
     // ----------------------------------------------------------------------
@@ -44,9 +39,11 @@ export const routes: Routes = [
     // ----------------------------------------------------------------------
     {
         path: 'student',
-        // ATTENTION: Remplacez par votre composant Shell s'il est différent.
         loadComponent: () => import('./features/student/student-shell/student-shell.component').then(m => m.StudentShellComponent),
         // canActivate: [authGuard, studentGuard], // PROTECTION UNIQUE pour toutes les routes enfants
+        // PROTECTION DU SHELL : Doit être connecté ET avoir le rôle ETUDIANT
+        canActivate: [authGuard, roleGuard], 
+        data: { roles: ['ETUDIANT'] }, // Rôle requis pour le RoleGuard
         children: [
             { 
                 path: '', 
@@ -86,9 +83,11 @@ export const routes: Routes = [
     // ----------------------------------------------------------------------
     {
         path: 'tutor',
-        // ATTENTION: Remplacez par votre composant Shell
         loadComponent: () => import('./features/tutor/tutor-shell/tutor-shell.component').then(m => m.TutorShellComponent),
         // canActivate: [authGuard, tutorGuard], // PROTECTION UNIQUE
+        // 🎯 PROTECTION DU SHELL : Doit être connecté ET avoir le rôle TUTEUR
+        canActivate: [authGuard, roleGuard], 
+        data: { roles: ['TUTEUR'] }, // Rôle requis pour le RoleGuard
         children: [
             { 
                 path: '', 
@@ -133,9 +132,11 @@ export const routes: Routes = [
     // ----------------------------------------------------------------------
     {
         path: 'admin',
-        // Utilisation du AdminShellComponent que nous avons créé
         loadComponent: () => import('./features/admin/admin-shell/admin-shell.component').then(m => m.AdminShellComponent),
         // canActivate: [authGuard, adminGuard], // PROTECTION UNIQUE
+        // PROTECTION DU SHELL : Doit être connecté ET avoir le rôle ADMIN
+        canActivate: [authGuard, roleGuard], 
+        data: { roles: ['ADMIN'] }, // Rôle requis pour le RoleGuard
         children: [
             { 
                 path: '', 
@@ -169,8 +170,9 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/admin/manage-subjects/manage-subjects.component').then(m => m.ManageSubjectsComponent),
             },
             { 
-                path: 'settings', 
+                path: 'settings',/*:id*/ 
                 loadComponent: () => import('./features/admin/admin-settings/admin-settings.component').then(m => m.AdminSettingsComponent),
+                canActivate: [userGuard]
             },
             { 
                 path: 'messages'/*/:id*/, // Utilisez une route paramétrée pour un profil public
@@ -178,15 +180,23 @@ export const routes: Routes = [
             }
         ]
     },
-    
+
     // ----------------------------------------------------------------------
-    // 5. FALLBACK / 404
+    // 5. Pages d'Erreur (À ajouter pour une UX professionnelle)
+    // ----------------------------------------------------------------------
+    { 
+        path: 'unauthorized', 
+        loadComponent: () => import('./features/auth/unauthorized/unauthorized.component').then(m => m.UnauthorizedComponent)
+    },
+
+    // ----------------------------------------------------------------------
+    // 6. FALLBACK / 404
     // ----------------------------------------------------------------------
     { 
         path: '**', 
         redirectTo: '' // Redirige vers la page d'accueil par défaut
         // Idéalement, charger un composant 404 ici
-    }
+    },
 
 
 ];

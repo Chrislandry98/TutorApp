@@ -1,0 +1,19 @@
+<div class="unauthorized-container">
+  <div class="content-wrapper">
+    <div class="icon-section">
+      <i class="bi bi-shield-slash-fill"></i> <!-- Icône Bootstrap (assurez-vous d'avoir Bootstrap Icons) --></div>
+    <h1 class="title">Accès Non Autorisé</h1>
+    <p class="message">
+      Désolé, vous n'avez pas les permissions nécessaires pour accéder à cette page.
+      Veuillez vous assurer que vous êtes connecté(e) avec le bon compte ou contacter un administrateur.
+    </p>
+    <div class="button-group">
+      <button class="btn btn-primary" (click)="goToHome()">
+        <i class="bi bi-house-door-fill me-2"></i>Retour à l'accueil
+      </button>
+      <button class="btn btn-outline-secondary" (click)="goBack()">
+        <i class="bi bi-arrow-left me-2"></i>Page précédente
+      </button>
+    </div>
+  </div>
+</div>
